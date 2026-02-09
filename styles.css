@@ -262,6 +262,14 @@ h3 {
   margin-bottom: 0;
 }
 
+.announcement-bar .lesson-links {
+  min-width: 220px;
+}
+
+.announcement-bar .lesson-links a {
+  width: 100%;
+}
+
 a {
   color: var(--maroon-700);
   text-decoration: none;
@@ -277,6 +285,9 @@ a:focus-visible {
 }
 
 .lesson-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #d7bec2;
   border-radius: 999px;
   padding: 0.2rem 0.6rem;
