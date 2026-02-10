@@ -70,10 +70,9 @@ h1 {
 
 .top-links {
   margin-top: 0.9rem;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 0.6rem;
-  justify-content: space-between;
   position: sticky;
   top: 0.5rem;
   z-index: 15;
@@ -93,7 +92,6 @@ h1 {
   font-weight: 600;
   background: #fff9f9;
   color: var(--maroon-700);
-  flex: 1 1 140px;
   text-align: center;
 }
 
@@ -130,6 +128,21 @@ h1 {
   color: var(--text-secondary);
   font-size: 0.88rem;
   padding: 0.8rem;
+}
+
+.embed-slot .instagram-media {
+  margin: 0 auto !important;
+}
+
+.explore-gallery {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.explore-tile .embed-slot {
+  min-height: 240px;
 }
 
 .class-grid {
@@ -686,6 +699,7 @@ a:focus-visible {
   .top-links {
     top: 0.35rem;
     width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 
   .class-card {
