@@ -195,6 +195,17 @@ h3 {
   box-shadow: inset 3px 0 0 #c998a1;
 }
 
+.quiz-note-item {
+  box-shadow: inset 2px 0 0 #d8aeb6;
+  background: linear-gradient(180deg, #fffefe 0%, #fdf9fa 100%);
+}
+
+.quiz-note-item .lesson-title {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
 .applet-item {
   background: linear-gradient(180deg, #ffffff 0%, #f6fafc 100%);
   border-color: #c9dce6;
