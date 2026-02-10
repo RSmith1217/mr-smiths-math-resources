@@ -174,15 +174,6 @@ h3 {
   color: var(--text-secondary);
 }
 
-.review-note {
-  border: 1px solid #e6c6cb;
-  border-radius: var(--radius-md);
-  background: linear-gradient(180deg, #fffefe 0%, #fcf6f7 100%);
-  box-shadow: inset 3px 0 0 #c998a1;
-  color: var(--maroon-700);
-  padding: 0.5rem 0.65rem;
-}
-
 .lesson-list {
   margin: 0;
   padding-left: 1.2rem;
