@@ -251,6 +251,42 @@ h3 {
   margin-top: 0.18rem;
 }
 
+.jump-nav {
+  margin: 0.6rem 0 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fff;
+  padding: 0.6rem 0.7rem;
+}
+
+.jump-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--maroon-700);
+}
+
+.jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.jump-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d7bec2;
+  border-radius: 999px;
+  padding: 0.2rem 0.58rem;
+  font-size: 0.77rem;
+  font-weight: 600;
+  color: var(--maroon-700);
+  background: #fff9f9;
+}
+
 .announcement-bar {
   display: flex;
   align-items: center;
