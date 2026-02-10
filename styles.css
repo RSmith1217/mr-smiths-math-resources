@@ -101,6 +101,27 @@ h1 {
   padding: 0 1.2rem 3rem;
 }
 
+.tool-shortcuts {
+  max-width: 960px;
+  margin: 0 auto 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tool-shortcut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d7bec2;
+  border-radius: 999px;
+  padding: 0.26rem 0.68rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #fff9f9;
+  color: var(--maroon-700);
+}
+
 .class-grid {
   max-width: 960px;
   margin: 0 auto;
@@ -450,10 +471,6 @@ a:focus-visible {
 
 .mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
-}
-
-.rr-writeup p + p {
-  margin-top: 0.2rem;
 }
 
 .triangle-grid {
