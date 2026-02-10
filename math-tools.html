@@ -159,7 +159,7 @@
           const B = toDeg(Math.acos(clamp((a * a + c * c - b * b) / (2 * a * c))));
           const C = 180 - A - B;
 
-          return [{ method: "Law of Cosines (SSS)", sides: [a, b, c], angles: [A, B, C] }];
+          return [{ method: "Law of Cosines (SSS)", condition: "SSS", sides: [a, b, c], angles: [A, B, C] }];
         }
 
         function solveAASorASA(sides, angles) {
@@ -173,7 +173,7 @@
           for (let i = 0; i < 3; i += 1) {
             if (s[i] == null) s[i] = ratio * Math.sin(toRad(A[i]));
           }
-          return [{ method: "Law of Sines (ASA/AAS)", sides: s, angles: A }];
+          return [{ method: "Law of Sines (ASA/AAS)", condition: "ASA/AAS", sides: s, angles: A }];
         }
 
         function solveSAS(sides, angles, angleIdx) {
@@ -188,7 +188,14 @@
           A[i] = toDeg(Math.acos(clamp((s[j] * s[j] + s[k] * s[k] - s[i] * s[i]) / (2 * s[j] * s[k]))));
           A[j] = 180 - A[k] - A[i];
           if (A[j] <= 0) return [];
-          return [{ method: "Law of Cosines (SAS)", sides: s, angles: A }];
+          return [{
+            method: "Law of Cosines (SAS)",
+            condition: "SAS",
+            includedAngleIdx: k,
+            includedSides: [i, j],
+            sides: s,
+            angles: A
+          }];
         }
 
         function solveSSA(sides, angles, angleIdx) {
@@ -219,7 +226,7 @@
             if (curA[k] <= EPS) continue;
             curS[k] = (curS[i] * Math.sin(toRad(curA[k]))) / Math.sin(toRad(curA[i]));
             if (curS[k] <= EPS) continue;
-            out.push({ method: "Law of Sines (SSA)", sides: curS, angles: curA });
+            out.push({ method: "Law of Sines (SSA)", condition: "SSA", sides: curS, angles: curA });
           }
 
           return out;
@@ -241,9 +248,12 @@
 
         function renderSolution(solution, idx) {
           const diagram = renderTriangleDiagram(solution);
+          const solveFormula = getSolveFormula(solution);
+          const areaDetails = getAreaDetails(solution);
           return `
             <div class="triangle-solution">
               <p class="triangle-method">Solution ${idx + 1}: ${solution.method}</p>
+              <p class="triangle-values"><strong>Solve formula:</strong> ${solveFormula}</p>
               ${diagram}
               <p class="triangle-values">
                 a = ${round3(solution.sides[0])}, b = ${round3(solution.sides[1])}, c = ${round3(solution.sides[2])}
@@ -251,8 +261,61 @@
               <p class="triangle-values">
                 A = ${round3(solution.angles[0])}deg, B = ${round3(solution.angles[1])}deg, C = ${round3(solution.angles[2])}deg
               </p>
+              <p class="triangle-values"><strong>Area formula:</strong> ${areaDetails.formula}</p>
+              <p class="triangle-values"><strong>Area:</strong> ${round3(areaDetails.area)}</p>
             </div>
           `;
+        }
+
+        function getSolveFormula(solution) {
+          if (solution.condition === "SSS") {
+            return "a^2 = b^2 + c^2 - 2bc cos(A) (Law of Cosines)";
+          }
+          if (solution.condition === "SAS") {
+            return "c^2 = a^2 + b^2 - 2ab cos(C) (Law of Cosines)";
+          }
+          if (solution.condition === "SSA") {
+            return "sin(B)/b = sin(A)/a (Law of Sines; possible ambiguous case)";
+          }
+          return "a/sin(A) = b/sin(B) = c/sin(C) (Law of Sines)";
+        }
+
+        function getHeronArea(sides) {
+          const [a, b, c] = sides;
+          const s = (a + b + c) / 2;
+          const areaSq = Math.max(0, s * (s - a) * (s - b) * (s - c));
+          return Math.sqrt(areaSq);
+        }
+
+        function getAreaDetails(solution) {
+          const sides = solution.sides;
+          const angles = solution.angles;
+
+          if (solution.condition === "SSS") {
+            const s = (sides[0] + sides[1] + sides[2]) / 2;
+            const area = getHeronArea(sides);
+            return {
+              area,
+              formula: `Area = sqrt(s(s-a)(s-b)(s-c)), s = ${round3(s)}`
+            };
+          }
+
+          if (solution.condition === "SAS" && solution.includedSides && solution.includedAngleIdx != null) {
+            const i = solution.includedSides[0];
+            const j = solution.includedSides[1];
+            const k = solution.includedAngleIdx;
+            const area = 0.5 * sides[i] * sides[j] * Math.sin(toRad(angles[k]));
+            return {
+              area,
+              formula: `Area = 1/2 * ${sideKeys[i]} * ${sideKeys[j]} * sin(${angleKeys[k]})`
+            };
+          }
+
+          const area = 0.5 * sides[1] * sides[2] * Math.sin(toRad(angles[0]));
+          return {
+            area,
+            formula: "Area = 1/2 * b * c * sin(A)"
+          };
         }
 
         function renderTriangleDiagram(solution) {
