@@ -189,6 +189,18 @@ h3 {
   padding: 0.75rem 0.8rem;
 }
 
+.review-item {
+  background: linear-gradient(180deg, #fffefe 0%, #fcf6f7 100%);
+  border-color: #e6c6cb;
+  box-shadow: inset 3px 0 0 #c998a1;
+}
+
+.applet-item {
+  background: linear-gradient(180deg, #ffffff 0%, #f6fafc 100%);
+  border-color: #c9dce6;
+  box-shadow: inset 3px 0 0 #95b7c9;
+}
+
 .lesson-title {
   margin: 0;
   font-size: 0.92rem;
