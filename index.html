@@ -104,7 +104,7 @@
           </div>
         </article>
 
-        <article class="class-card full-width">
+        <article class="class-card full-width explore-tile">
           <h2>Valentine's Day is Saturday!</h2>
           <p class="card-description">
             Featured math clip. If playback does not start in-page, use the source button below.
@@ -147,5 +147,12 @@
       </section>
     </main>
     <script async src="https://www.instagram.com/embed.js"></script>
+    <script>
+      window.addEventListener("load", function () {
+        if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+      });
+    </script>
   </body>
 </html>
