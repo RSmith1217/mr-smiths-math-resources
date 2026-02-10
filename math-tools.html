@@ -98,43 +98,6 @@
           </div>
         </article>
 
-        <article class="class-card full-width">
-          <h2>Related Rates Organizer</h2>
-          <p class="card-description">
-            Fill in the fields to generate a clean, step-by-step related rates setup and solution outline.
-          </p>
-          <form id="rr-form" class="tool-form">
-            <div class="tool-grid">
-              <label for="rr-scenario">Scenario</label>
-              <textarea id="rr-scenario" rows="2" placeholder="Describe the problem context in one or two sentences."></textarea>
-
-              <label for="rr-given">Given Information</label>
-              <textarea id="rr-given" rows="3" placeholder="Example: dV/dt = 5 cm^3/s, r = 3 cm at the instant."></textarea>
-
-              <label for="rr-target">Target Rate</label>
-              <input id="rr-target" type="text" placeholder="Example: Find dr/dt" />
-
-              <label for="rr-equation">Model Equation</label>
-              <input id="rr-equation" type="text" placeholder="Example: V = (4/3)pi r^3" />
-
-              <label for="rr-derivative">Differentiate (w.r.t. t)</label>
-              <input id="rr-derivative" type="text" placeholder="Example: dV/dt = 4pi r^2 dr/dt" />
-
-              <label for="rr-substitute">Substitute Known Values</label>
-              <textarea id="rr-substitute" rows="2" placeholder="Example: 5 = 4pi(3)^2 dr/dt"></textarea>
-
-              <label for="rr-answer">Final Rate + Units</label>
-              <input id="rr-answer" type="text" placeholder="Example: dr/dt = 5/(36pi) cm/s" />
-            </div>
-            <div class="lesson-links">
-              <button type="submit" class="solver-btn">Generate Write-Up</button>
-              <button type="button" id="rr-clear" class="solver-btn secondary">Clear</button>
-            </div>
-          </form>
-          <div id="rr-result" class="triangle-result" aria-live="polite">
-            Fill in the organizer and click "Generate Write-Up."
-          </div>
-        </article>
       </section>
     </main>
     <script>
@@ -145,9 +108,6 @@
         const polyForm = document.getElementById("poly-form");
         const polyClearBtn = document.getElementById("poly-clear");
         const polyResultEl = document.getElementById("poly-result");
-        const rrForm = document.getElementById("rr-form");
-        const rrClearBtn = document.getElementById("rr-clear");
-        const rrResultEl = document.getElementById("rr-result");
         const sideKeys = ["a", "b", "c"];
         const angleKeys = ["A", "B", "C"];
         const EPS = 1e-8;
@@ -172,15 +132,6 @@
           if (v === "" || v == null) return null;
           const n = Number(v);
           return Number.isFinite(n) ? n : null;
-        }
-
-        function escapeHtml(str) {
-          return String(str)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#39;");
         }
 
         function findKnownIndexes(arr) {
@@ -702,51 +653,6 @@
         polyClearBtn.addEventListener("click", function () {
           polyForm.reset();
           polyResultEl.textContent = 'Enter coefficients and click "Analyze Polynomial."';
-        });
-
-        function getField(id) {
-          return document.getElementById(id).value.trim();
-        }
-
-        rrForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          const scenario = getField("rr-scenario");
-          const given = getField("rr-given");
-          const target = getField("rr-target");
-          const equation = getField("rr-equation");
-          const derivative = getField("rr-derivative");
-          const substitute = getField("rr-substitute");
-          const answer = getField("rr-answer");
-
-          if (!target || !equation || !derivative) {
-            rrResultEl.innerHTML =
-              '<p class="triangle-error">Please include at least Target Rate, Model Equation, and Differentiate step.</p>';
-            return;
-          }
-
-          rrResultEl.innerHTML = `
-            <div class="rr-writeup">
-              <p class="triangle-values"><strong>1. Scenario</strong></p>
-              <p class="triangle-values">${escapeHtml(scenario || "N/A")}</p>
-              <p class="triangle-values"><strong>2. Given Information</strong></p>
-              <p class="triangle-values">${escapeHtml(given || "N/A")}</p>
-              <p class="triangle-values"><strong>3. Target Rate</strong></p>
-              <p class="triangle-values"><span class="math-eq">${escapeHtml(target)}</span></p>
-              <p class="triangle-values"><strong>4. Model Equation</strong></p>
-              <p class="triangle-values"><span class="math-eq">${escapeHtml(equation)}</span></p>
-              <p class="triangle-values"><strong>5. Differentiate with Respect to Time</strong></p>
-              <p class="triangle-values"><span class="math-eq">${escapeHtml(derivative)}</span></p>
-              <p class="triangle-values"><strong>6. Substitute Known Values</strong></p>
-              <p class="triangle-values"><span class="math-eq">${escapeHtml(substitute || "N/A")}</span></p>
-              <p class="triangle-values"><strong>7. Solve for Target Rate</strong></p>
-              <p class="triangle-values"><span class="math-eq">${escapeHtml(answer || "N/A")}</span></p>
-            </div>
-          `;
-        });
-
-        rrClearBtn.addEventListener("click", function () {
-          rrForm.reset();
-          rrResultEl.textContent = 'Fill in the organizer and click "Generate Write-Up."';
         });
       })();
     </script>
