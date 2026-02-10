@@ -37,7 +37,6 @@
           <a class="quick-link" href="ai-resources.html">AI Resources</a>
           <a class="quick-link" href="math-tools.html">Math Tools</a>
         </div>
-        <a class="back-link" href="index.html">Back to Class Resources</a>
       </div>
     </header>
 
@@ -77,6 +76,65 @@
             Enter values and click "Solve Triangle."
           </div>
         </article>
+
+        <article class="class-card full-width">
+          <h2>Polynomial Root &amp; Factor Checker</h2>
+          <p class="card-description">
+            Enter coefficients in descending power order. Example: <span class="math-eq">2, -3, -11, 6</span> for
+            <span class="math-eq">2x<sup>3</sup> - 3x<sup>2</sup> - 11x + 6</span>.
+          </p>
+          <form id="poly-form" class="tool-form">
+            <div class="tool-grid">
+              <label for="poly-coeffs">Coefficients</label>
+              <input id="poly-coeffs" name="coeffs" type="text" placeholder="e.g., 1, -6, 11, -6" />
+            </div>
+            <div class="lesson-links">
+              <button type="submit" class="solver-btn">Analyze Polynomial</button>
+              <button type="button" id="poly-clear" class="solver-btn secondary">Clear</button>
+            </div>
+          </form>
+          <div id="poly-result" class="triangle-result" aria-live="polite">
+            Enter coefficients and click "Analyze Polynomial."
+          </div>
+        </article>
+
+        <article class="class-card full-width">
+          <h2>Related Rates Organizer</h2>
+          <p class="card-description">
+            Fill in the fields to generate a clean, step-by-step related rates setup and solution outline.
+          </p>
+          <form id="rr-form" class="tool-form">
+            <div class="tool-grid">
+              <label for="rr-scenario">Scenario</label>
+              <textarea id="rr-scenario" rows="2" placeholder="Describe the problem context in one or two sentences."></textarea>
+
+              <label for="rr-given">Given Information</label>
+              <textarea id="rr-given" rows="3" placeholder="Example: dV/dt = 5 cm^3/s, r = 3 cm at the instant."></textarea>
+
+              <label for="rr-target">Target Rate</label>
+              <input id="rr-target" type="text" placeholder="Example: Find dr/dt" />
+
+              <label for="rr-equation">Model Equation</label>
+              <input id="rr-equation" type="text" placeholder="Example: V = (4/3)pi r^3" />
+
+              <label for="rr-derivative">Differentiate (w.r.t. t)</label>
+              <input id="rr-derivative" type="text" placeholder="Example: dV/dt = 4pi r^2 dr/dt" />
+
+              <label for="rr-substitute">Substitute Known Values</label>
+              <textarea id="rr-substitute" rows="2" placeholder="Example: 5 = 4pi(3)^2 dr/dt"></textarea>
+
+              <label for="rr-answer">Final Rate + Units</label>
+              <input id="rr-answer" type="text" placeholder="Example: dr/dt = 5/(36pi) cm/s" />
+            </div>
+            <div class="lesson-links">
+              <button type="submit" class="solver-btn">Generate Write-Up</button>
+              <button type="button" id="rr-clear" class="solver-btn secondary">Clear</button>
+            </div>
+          </form>
+          <div id="rr-result" class="triangle-result" aria-live="polite">
+            Fill in the organizer and click "Generate Write-Up."
+          </div>
+        </article>
       </section>
     </main>
     <script>
@@ -84,6 +142,12 @@
         const form = document.getElementById("triangle-solver-form");
         const clearBtn = document.getElementById("triangle-clear");
         const resultEl = document.getElementById("triangle-result");
+        const polyForm = document.getElementById("poly-form");
+        const polyClearBtn = document.getElementById("poly-clear");
+        const polyResultEl = document.getElementById("poly-result");
+        const rrForm = document.getElementById("rr-form");
+        const rrClearBtn = document.getElementById("rr-clear");
+        const rrResultEl = document.getElementById("rr-result");
         const sideKeys = ["a", "b", "c"];
         const angleKeys = ["A", "B", "C"];
         const EPS = 1e-8;
@@ -108,6 +172,15 @@
           if (v === "" || v == null) return null;
           const n = Number(v);
           return Number.isFinite(n) ? n : null;
+        }
+
+        function escapeHtml(str) {
+          return String(str)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#39;");
         }
 
         function findKnownIndexes(arr) {
@@ -454,6 +527,226 @@
         clearBtn.addEventListener("click", function () {
           form.reset();
           resultEl.textContent = 'Enter values and click "Solve Triangle."';
+        });
+
+        function gcd(a, b) {
+          a = Math.abs(a);
+          b = Math.abs(b);
+          while (b !== 0) {
+            const t = b;
+            b = a % b;
+            a = t;
+          }
+          return a || 1;
+        }
+
+        function parseCoefficients(raw) {
+          const pieces = raw
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+          if (pieces.length < 2) return null;
+          const nums = pieces.map(Number);
+          if (nums.some((n) => !Number.isFinite(n))) return null;
+          while (nums.length > 1 && Math.abs(nums[0]) < EPS) nums.shift();
+          return nums.length >= 2 ? nums : null;
+        }
+
+        function evalPoly(coeffs, x) {
+          let acc = 0;
+          for (const c of coeffs) acc = acc * x + c;
+          return acc;
+        }
+
+        function integerFactors(n) {
+          const N = Math.abs(n);
+          const out = new Set();
+          for (let i = 1; i * i <= N; i += 1) {
+            if (N % i === 0) {
+              out.add(i);
+              out.add(N / i);
+            }
+          }
+          return [...out];
+        }
+
+        function candidateRationals(leading, constant) {
+          const pVals = integerFactors(constant);
+          const qVals = integerFactors(leading);
+          const seen = new Set();
+          const out = [];
+          for (const p0 of pVals) {
+            for (const q0 of qVals) {
+              const g = gcd(p0, q0);
+              const p = p0 / g;
+              const q = q0 / g;
+              const key = `${p}/${q}`;
+              if (seen.has(key)) continue;
+              seen.add(key);
+              out.push({ p, q, value: p / q, text: q === 1 ? `${p}` : `${p}/${q}` });
+              out.push({ p: -p, q, value: -p / q, text: q === 1 ? `${-p}` : `${-p}/${q}` });
+            }
+          }
+          return out.sort((a, b) => a.value - b.value);
+        }
+
+        function syntheticDivide(coeffs, root) {
+          const out = [coeffs[0]];
+          for (let i = 1; i < coeffs.length; i += 1) {
+            out.push(coeffs[i] + out[i - 1] * root);
+          }
+          return { quotient: out.slice(0, -1), remainder: out[out.length - 1], row: out };
+        }
+
+        function coeffsToPoly(coeffs) {
+          const n = coeffs.length - 1;
+          const terms = [];
+          for (let i = 0; i < coeffs.length; i += 1) {
+            const c = coeffs[i];
+            if (Math.abs(c) < EPS) continue;
+            const p = n - i;
+            const abs = Math.abs(round3(c));
+            const sign = c < 0 ? "-" : "+";
+            let term = "";
+            if (p === 0) term = `${abs}`;
+            else if (p === 1) term = abs === 1 ? "x" : `${abs}x`;
+            else term = abs === 1 ? `x<sup>${p}</sup>` : `${abs}x<sup>${p}</sup>`;
+            terms.push({ sign, term });
+          }
+          if (!terms.length) return "0";
+          return terms
+            .map((t, i) => (i === 0 ? (t.sign === "-" ? `-${t.term}` : t.term) : ` ${t.sign} ${t.term}`))
+            .join("");
+        }
+
+        function renderPolyAnalysis(coeffs) {
+          const degree = coeffs.length - 1;
+          const leadInt = Number.isInteger(coeffs[0]);
+          const constInt = Number.isInteger(coeffs[coeffs.length - 1]);
+          const allInt = coeffs.every(Number.isInteger);
+          const candidateText = [];
+          let exactRoots = [];
+          const steps = [];
+
+          if (allInt && leadInt && constInt && coeffs[0] !== 0) {
+            const candidates = candidateRationals(Math.abs(coeffs[0]), Math.abs(coeffs[coeffs.length - 1]));
+            candidateText.push(...candidates.map((c) => c.text));
+
+            // Find exact rational roots and show synthetic steps for each discovered root.
+            let work = coeffs.slice();
+            const used = new Set();
+            for (const cand of candidates) {
+              const key = cand.text;
+              if (used.has(key)) continue;
+              const y = evalPoly(work, cand.value);
+              if (Math.abs(y) < 1e-7) {
+                used.add(key);
+                exactRoots.push(cand.text);
+                const div = syntheticDivide(work, cand.value);
+                steps.push({
+                  root: cand.text,
+                  before: work.slice(),
+                  row: div.row.slice(),
+                  remainder: div.remainder
+                });
+                work = div.quotient.slice();
+              }
+            }
+          }
+
+          const factors =
+            exactRoots.length > 0
+              ? exactRoots.map((r) => `(x ${r.startsWith("-") ? "+" : "-"} ${r.replace("-", "")})`).join("")
+              : "No exact rational linear factors found.";
+
+          const stepsHtml =
+            steps.length === 0
+              ? '<p class="triangle-values">Synthetic division steps appear when exact rational roots are found.</p>'
+              : steps
+                  .map(
+                    (s, i) => `
+                  <div class="poly-step">
+                    <p class="triangle-values"><strong>Step ${i + 1}</strong>: divide by root ${s.root}</p>
+                    <p class="triangle-values mono">Coefficients: [${s.before.map(round3).join(", ")}]</p>
+                    <p class="triangle-values mono">Synthetic row: [${s.row.map(round3).join(", ")}], remainder = ${round3(
+                      s.remainder
+                    )}</p>
+                  </div>
+                `
+                  )
+                  .join("");
+
+          return `
+            <p class="triangle-values"><strong>Polynomial:</strong> <span class="math-eq">${coeffsToPoly(coeffs)}</span></p>
+            <p class="triangle-values"><strong>Degree:</strong> ${degree}</p>
+            <p class="triangle-values"><strong>Possible rational roots (RRT):</strong> ${
+              candidateText.length ? candidateText.join(", ") : "Requires integer coefficients."
+            }</p>
+            <p class="triangle-values"><strong>Exact rational roots found:</strong> ${exactRoots.length ? exactRoots.join(", ") : "None"}</p>
+            <p class="triangle-values"><strong>Factor form (rational part):</strong> <span class="math-eq">${factors}</span></p>
+            ${stepsHtml}
+          `;
+        }
+
+        polyForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const coeffs = parseCoefficients(document.getElementById("poly-coeffs").value);
+          if (!coeffs) {
+            polyResultEl.innerHTML =
+              '<p class="triangle-error">Please enter at least two valid coefficients separated by commas.</p>';
+            return;
+          }
+          polyResultEl.innerHTML = renderPolyAnalysis(coeffs);
+        });
+
+        polyClearBtn.addEventListener("click", function () {
+          polyForm.reset();
+          polyResultEl.textContent = 'Enter coefficients and click "Analyze Polynomial."';
+        });
+
+        function getField(id) {
+          return document.getElementById(id).value.trim();
+        }
+
+        rrForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const scenario = getField("rr-scenario");
+          const given = getField("rr-given");
+          const target = getField("rr-target");
+          const equation = getField("rr-equation");
+          const derivative = getField("rr-derivative");
+          const substitute = getField("rr-substitute");
+          const answer = getField("rr-answer");
+
+          if (!target || !equation || !derivative) {
+            rrResultEl.innerHTML =
+              '<p class="triangle-error">Please include at least Target Rate, Model Equation, and Differentiate step.</p>';
+            return;
+          }
+
+          rrResultEl.innerHTML = `
+            <div class="rr-writeup">
+              <p class="triangle-values"><strong>1. Scenario</strong></p>
+              <p class="triangle-values">${escapeHtml(scenario || "N/A")}</p>
+              <p class="triangle-values"><strong>2. Given Information</strong></p>
+              <p class="triangle-values">${escapeHtml(given || "N/A")}</p>
+              <p class="triangle-values"><strong>3. Target Rate</strong></p>
+              <p class="triangle-values"><span class="math-eq">${escapeHtml(target)}</span></p>
+              <p class="triangle-values"><strong>4. Model Equation</strong></p>
+              <p class="triangle-values"><span class="math-eq">${escapeHtml(equation)}</span></p>
+              <p class="triangle-values"><strong>5. Differentiate with Respect to Time</strong></p>
+              <p class="triangle-values"><span class="math-eq">${escapeHtml(derivative)}</span></p>
+              <p class="triangle-values"><strong>6. Substitute Known Values</strong></p>
+              <p class="triangle-values"><span class="math-eq">${escapeHtml(substitute || "N/A")}</span></p>
+              <p class="triangle-values"><strong>7. Solve for Target Rate</strong></p>
+              <p class="triangle-values"><span class="math-eq">${escapeHtml(answer || "N/A")}</span></p>
+            </div>
+          `;
+        });
+
+        rrClearBtn.addEventListener("click", function () {
+          rrForm.reset();
+          rrResultEl.textContent = 'Fill in the organizer and click "Generate Write-Up."';
         });
       })();
     </script>

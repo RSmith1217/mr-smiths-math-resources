@@ -408,6 +408,54 @@ a:focus-visible {
   margin-top: 0.4rem;
 }
 
+.tool-form {
+  margin-top: 0.4rem;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: 140px minmax(120px, 1fr);
+  gap: 0.55rem 0.7rem;
+  align-items: center;
+}
+
+.tool-grid label {
+  font-size: 0.88rem;
+  color: var(--maroon-700);
+  font-weight: 600;
+}
+
+.tool-grid input,
+.tool-grid textarea {
+  width: 100%;
+  border: 1px solid #d7bec2;
+  border-radius: 10px;
+  padding: 0.42rem 0.55rem;
+  font: inherit;
+  color: var(--text-primary);
+  background: #fff;
+}
+
+.tool-grid input:focus-visible,
+.tool-grid textarea:focus-visible {
+  outline: 2px solid rgba(122, 0, 0, 0.18);
+  border-color: var(--accent);
+}
+
+.poly-step + .poly-step {
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed var(--line);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+}
+
+.rr-writeup p + p {
+  margin-top: 0.2rem;
+}
+
 .triangle-grid {
   display: grid;
   grid-template-columns: 140px minmax(120px, 1fr);
@@ -528,6 +576,10 @@ a:focus-visible {
   color: var(--maroon-900);
 }
 
+.paren {
+  font-family: "Times New Roman", "Cambria Math", Georgia, serif;
+}
+
 .frac {
   display: inline-flex;
   flex-direction: column;
@@ -544,6 +596,25 @@ a:focus-visible {
 
 .frac .den {
   padding: 0.04em 0.2em 0;
+}
+
+.sqrt {
+  display: inline-flex;
+  align-items: flex-start;
+  vertical-align: middle;
+}
+
+.sqrt .radic {
+  font-size: 1.15em;
+  line-height: 1;
+  margin-right: 0.06em;
+}
+
+.sqrt .radicand {
+  display: inline-block;
+  border-top: 1px solid currentColor;
+  padding: 0.08em 0.15em 0 0.08em;
+  line-height: 1.1;
 }
 
 .triangle-error {
@@ -604,6 +675,10 @@ a:focus-visible {
   }
 
   .triangle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-grid {
     grid-template-columns: 1fr;
   }
 }
