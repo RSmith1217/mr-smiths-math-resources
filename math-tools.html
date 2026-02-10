@@ -241,12 +241,13 @@
 
         function renderSolution(solution, idx) {
           const diagram = renderTriangleDiagram(solution);
-          const solveFormula = getSolveFormula(solution);
+          const solveDetails = getSolveDetails(solution);
           const areaDetails = getAreaDetails(solution);
           return `
             <div class="triangle-solution">
               <p class="triangle-method">Solution ${idx + 1}: ${solution.method}</p>
-              <p class="triangle-values"><strong>Solve formula:</strong> ${solveFormula}</p>
+              <p class="triangle-values"><strong>Solve formula:</strong> ${solveDetails.symbolic}</p>
+              <p class="triangle-values"><strong>Substitute:</strong> ${solveDetails.substituted}</p>
               ${diagram}
               <p class="triangle-values">
                 a = ${round3(solution.sides[0])}, b = ${round3(solution.sides[1])}, c = ${round3(solution.sides[2])}
@@ -254,26 +255,60 @@
               <p class="triangle-values">
                 A = ${round3(solution.angles[0])}&deg;, B = ${round3(solution.angles[1])}&deg;, C = ${round3(solution.angles[2])}&deg;
               </p>
-              <p class="triangle-values"><strong>Area formula:</strong> <span class="math-eq">${areaDetails.formula}</span></p>
+              <p class="triangle-values"><strong>Area formula:</strong> ${areaDetails.symbolic}</p>
+              <p class="triangle-values"><strong>Substitute:</strong> ${areaDetails.substituted}</p>
               <p class="triangle-values"><strong>Area:</strong> ${round3(areaDetails.area)}</p>
             </div>
           `;
         }
 
-        function getSolveFormula(solution) {
+        function sqrtExpr(innerHtml) {
+          return `<span class="math-eq sqrt"><span class="radic">&radic;</span><span class="radicand">${innerHtml}</span></span>`;
+        }
+
+        function getSolveDetails(solution) {
+          const a = round3(solution.sides[0]);
+          const b = round3(solution.sides[1]);
+          const c = round3(solution.sides[2]);
+          const A = round3(solution.angles[0]);
+          const B = round3(solution.angles[1]);
+          const C = round3(solution.angles[2]);
+
           if (solution.condition === "SSS") {
-            return '<span class="math-eq">a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> - 2bc cos(A)</span> (Law of Cosines)';
+            return {
+              symbolic:
+                '<span class="math-eq">A = cos<sup>-1</sup><span class="paren">((b<sup>2</sup> + c<sup>2</sup> - a<sup>2</sup>) / (2bc))</span></span> (Law of Cosines)',
+              substituted: `<span class="math-eq">A = cos<sup>-1</sup><span class="paren">(( ${b}<sup>2</sup> + ${c}<sup>2</sup> - ${a}<sup>2</sup> ) / (2(${b})(${c})))</span> = ${A}&deg;</span>`
+            };
           }
           if (solution.condition === "SAS") {
             const i = solution.includedSides[0];
             const j = solution.includedSides[1];
             const k = solution.includedAngleIdx;
-            return `<span class="math-eq">${sideKeys[k]}<sup>2</sup> = ${sideKeys[i]}<sup>2</sup> + ${sideKeys[j]}<sup>2</sup> - 2(${sideKeys[i]})(${sideKeys[j]}) cos(${angleKeys[k]})</span> (Law of Cosines)`;
+            const lhs = sideKeys[k];
+            const s1 = sideKeys[i];
+            const s2 = sideKeys[j];
+            return {
+              symbolic:
+                `<span class="math-eq">${lhs}<sup>2</sup> = ${s1}<sup>2</sup> + ${s2}<sup>2</sup> - 2(${s1})(${s2})cos(${angleKeys[k]})</span> (Law of Cosines)`,
+              substituted:
+                `<span class="math-eq">${lhs}<sup>2</sup> = ${round3(solution.sides[i])}<sup>2</sup> + ${round3(solution.sides[j])}<sup>2</sup> - 2(${round3(solution.sides[i])})(${round3(solution.sides[j])})cos(${round3(solution.angles[k])}&deg;) = ${round3(solution.sides[k])}<sup>2</sup></span>`
+            };
           }
           if (solution.condition === "SSA") {
-            return '<span class="math-eq"><span class="frac"><span class="num">sin(B)</span><span class="den">b</span></span> = <span class="frac"><span class="num">sin(A)</span><span class="den">a</span></span></span> (Law of Sines; possible ambiguous case)';
+            return {
+              symbolic:
+                '<span class="math-eq"><span class="frac"><span class="num">sin(B)</span><span class="den">b</span></span> = <span class="frac"><span class="num">sin(A)</span><span class="den">a</span></span></span> (Law of Sines; possible ambiguous case)',
+              substituted:
+                `<span class="math-eq"><span class="frac"><span class="num">sin(${B}&deg;)</span><span class="den">${b}</span></span> = <span class="frac"><span class="num">sin(${A}&deg;)</span><span class="den">${a}</span></span></span>`
+            };
           }
-          return '<span class="math-eq"><span class="frac"><span class="num">a</span><span class="den">sin(A)</span></span> = <span class="frac"><span class="num">b</span><span class="den">sin(B)</span></span> = <span class="frac"><span class="num">c</span><span class="den">sin(C)</span></span></span> (Law of Sines)';
+          return {
+            symbolic:
+              '<span class="math-eq"><span class="frac"><span class="num">a</span><span class="den">sin(A)</span></span> = <span class="frac"><span class="num">b</span><span class="den">sin(B)</span></span> = <span class="frac"><span class="num">c</span><span class="den">sin(C)</span></span></span> (Law of Sines)',
+            substituted:
+              `<span class="math-eq"><span class="frac"><span class="num">${a}</span><span class="den">sin(${A}&deg;)</span></span> = <span class="frac"><span class="num">${b}</span><span class="den">sin(${B}&deg;)</span></span> = <span class="frac"><span class="num">${c}</span><span class="den">sin(${C}&deg;)</span></span></span>`
+          };
         }
 
         function getHeronArea(sides) {
@@ -286,13 +321,18 @@
         function getAreaDetails(solution) {
           const sides = solution.sides;
           const angles = solution.angles;
+          const a = round3(sides[0]);
+          const b = round3(sides[1]);
+          const c = round3(sides[2]);
+          const A = round3(angles[0]);
 
           if (solution.condition === "SSS") {
             const s = (sides[0] + sides[1] + sides[2]) / 2;
             const area = getHeronArea(sides);
             return {
               area,
-              formula: `A = &radic;(s(s-a)(s-b)(s-c)), s = ${round3(s)}`
+              symbolic: `A = ${sqrtExpr("s(s-a)(s-b)(s-c)")}, s = ${round3(s)}`,
+              substituted: `A = ${sqrtExpr(`${round3(s)}(${round3(s)}-${a})(${round3(s)}-${b})(${round3(s)}-${c})`)}`
             };
           }
 
@@ -303,14 +343,16 @@
             const area = 0.5 * sides[i] * sides[j] * Math.sin(toRad(angles[k]));
             return {
               area,
-              formula: `A = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(${sideKeys[i]})(${sideKeys[j]}) sin(${angleKeys[k]})`
+              symbolic: `A = <span class="math-eq"><span class="frac"><span class="num">1</span><span class="den">2</span></span>(${sideKeys[i]})(${sideKeys[j]}) sin(${angleKeys[k]})</span>`,
+              substituted: `<span class="math-eq">A = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(${round3(sides[i])})(${round3(sides[j])}) sin(${round3(angles[k])}&deg;)</span>`
             };
           }
 
           const area = 0.5 * sides[1] * sides[2] * Math.sin(toRad(angles[0]));
           return {
             area,
-            formula: "A = <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>bc sin(A)"
+            symbolic: "A = <span class=\"math-eq\"><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>bc sin(A)</span>",
+            substituted: `<span class="math-eq">A = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(${b})(${c}) sin(${A}&deg;)</span>`
           };
         }
 
