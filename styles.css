@@ -122,6 +122,16 @@ h1 {
   color: var(--maroon-700);
 }
 
+.embed-slot {
+  margin-top: 0.7rem;
+  border: 1px dashed #d7bec2;
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  padding: 0.8rem;
+}
+
 .class-grid {
   max-width: 960px;
   margin: 0 auto;
