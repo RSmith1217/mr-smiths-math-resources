@@ -523,6 +523,29 @@ a:focus-visible {
   color: var(--text-secondary);
 }
 
+.math-eq {
+  font-family: "Times New Roman", "Cambria Math", Georgia, serif;
+  color: var(--maroon-900);
+}
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 1.05;
+  margin: 0 0.08em;
+}
+
+.frac .num {
+  border-bottom: 1px solid currentColor;
+  padding: 0 0.2em 0.05em;
+}
+
+.frac .den {
+  padding: 0.04em 0.2em 0;
+}
+
 .triangle-error {
   margin: 0;
   color: var(--accent);

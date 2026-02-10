@@ -254,7 +254,7 @@
               <p class="triangle-values">
                 A = ${round3(solution.angles[0])}deg, B = ${round3(solution.angles[1])}deg, C = ${round3(solution.angles[2])}deg
               </p>
-              <p class="triangle-values"><strong>Area formula:</strong> ${areaDetails.formula}</p>
+              <p class="triangle-values"><strong>Area formula:</strong> <span class="math-eq">${areaDetails.formula}</span></p>
               <p class="triangle-values"><strong>Area:</strong> ${round3(areaDetails.area)}</p>
             </div>
           `;
@@ -262,15 +262,18 @@
 
         function getSolveFormula(solution) {
           if (solution.condition === "SSS") {
-            return "a^2 = b^2 + c^2 - 2bc cos(A) (Law of Cosines)";
+            return '<span class="math-eq">a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> - 2bc cos(A)</span> (Law of Cosines)';
           }
           if (solution.condition === "SAS") {
-            return "c^2 = a^2 + b^2 - 2ab cos(C) (Law of Cosines)";
+            const i = solution.includedSides[0];
+            const j = solution.includedSides[1];
+            const k = solution.includedAngleIdx;
+            return `<span class="math-eq">${sideKeys[k]}<sup>2</sup> = ${sideKeys[i]}<sup>2</sup> + ${sideKeys[j]}<sup>2</sup> - 2(${sideKeys[i]})(${sideKeys[j]}) cos(${angleKeys[k]})</span> (Law of Cosines)`;
           }
           if (solution.condition === "SSA") {
-            return "sin(B)/b = sin(A)/a (Law of Sines; possible ambiguous case)";
+            return '<span class="math-eq"><span class="frac"><span class="num">sin(B)</span><span class="den">b</span></span> = <span class="frac"><span class="num">sin(A)</span><span class="den">a</span></span></span> (Law of Sines; possible ambiguous case)';
           }
-          return "a/sin(A) = b/sin(B) = c/sin(C) (Law of Sines)";
+          return '<span class="math-eq"><span class="frac"><span class="num">a</span><span class="den">sin(A)</span></span> = <span class="frac"><span class="num">b</span><span class="den">sin(B)</span></span> = <span class="frac"><span class="num">c</span><span class="den">sin(C)</span></span></span> (Law of Sines)';
         }
 
         function getHeronArea(sides) {
@@ -289,7 +292,7 @@
             const area = getHeronArea(sides);
             return {
               area,
-              formula: `Area = sqrt(s(s-a)(s-b)(s-c)), s = ${round3(s)}`
+              formula: `K = &radic;(s(s-a)(s-b)(s-c)), s = ${round3(s)}`
             };
           }
 
@@ -300,14 +303,14 @@
             const area = 0.5 * sides[i] * sides[j] * Math.sin(toRad(angles[k]));
             return {
               area,
-              formula: `Area = 1/2 * ${sideKeys[i]} * ${sideKeys[j]} * sin(${angleKeys[k]})`
+              formula: `K = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(${sideKeys[i]})(${sideKeys[j]}) sin(${angleKeys[k]})`
             };
           }
 
           const area = 0.5 * sides[1] * sides[2] * Math.sin(toRad(angles[0]));
           return {
             area,
-            formula: "Area = 1/2 * b * c * sin(A)"
+            formula: "K = <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>bc sin(A)"
           };
         }
 
