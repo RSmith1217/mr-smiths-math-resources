@@ -252,7 +252,7 @@
                 a = ${round3(solution.sides[0])}, b = ${round3(solution.sides[1])}, c = ${round3(solution.sides[2])}
               </p>
               <p class="triangle-values">
-                A = ${round3(solution.angles[0])}deg, B = ${round3(solution.angles[1])}deg, C = ${round3(solution.angles[2])}deg
+                A = ${round3(solution.angles[0])}&deg;, B = ${round3(solution.angles[1])}&deg;, C = ${round3(solution.angles[2])}&deg;
               </p>
               <p class="triangle-values"><strong>Area formula:</strong> <span class="math-eq">${areaDetails.formula}</span></p>
               <p class="triangle-values"><strong>Area:</strong> ${round3(areaDetails.area)}</p>
@@ -292,7 +292,7 @@
             const area = getHeronArea(sides);
             return {
               area,
-              formula: `K = &radic;(s(s-a)(s-b)(s-c)), s = ${round3(s)}`
+              formula: `A = &radic;(s(s-a)(s-b)(s-c)), s = ${round3(s)}`
             };
           }
 
@@ -303,14 +303,14 @@
             const area = 0.5 * sides[i] * sides[j] * Math.sin(toRad(angles[k]));
             return {
               area,
-              formula: `K = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(${sideKeys[i]})(${sideKeys[j]}) sin(${angleKeys[k]})`
+              formula: `A = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(${sideKeys[i]})(${sideKeys[j]}) sin(${angleKeys[k]})`
             };
           }
 
           const area = 0.5 * sides[1] * sides[2] * Math.sin(toRad(angles[0]));
           return {
             area,
-            formula: "K = <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>bc sin(A)"
+            formula: "A = <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>bc sin(A)"
           };
         }
 
