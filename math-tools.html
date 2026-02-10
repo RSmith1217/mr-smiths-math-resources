@@ -50,26 +50,311 @@
           </p>
         </article>
 
-        <article class="class-card">
-          <h2>Graphing & Calculus</h2>
+        <article class="class-card full-width">
+          <h2>Triangle Solver (Law of Sines / Law of Cosines)</h2>
           <p class="card-description">
-            Add Desmos, GeoGebra, or other graphing applets for limits, derivatives, and function behavior.
+            Enter exactly 3 known values with at least 1 side. Angles are in degrees.
           </p>
-          <div class="lesson-links">
-            <a href="#" aria-disabled="true">Applet Placeholder</a>
-          </div>
-        </article>
+          <form id="triangle-solver-form" class="triangle-form">
+            <div class="triangle-grid">
+              <label for="side-a">Side a</label>
+              <input id="side-a" name="a" type="number" step="any" min="0" inputmode="decimal" />
 
-        <article class="class-card">
-          <h2>Algebra & Trigonometry</h2>
-          <p class="card-description">
-            Add applets for transformations, identities, radicals, and other skill-building explorations.
-          </p>
-          <div class="lesson-links">
-            <a href="#" aria-disabled="true">Applet Placeholder</a>
+              <label for="side-b">Side b</label>
+              <input id="side-b" name="b" type="number" step="any" min="0" inputmode="decimal" />
+
+              <label for="side-c">Side c</label>
+              <input id="side-c" name="c" type="number" step="any" min="0" inputmode="decimal" />
+
+              <label for="angle-a">Angle A (deg)</label>
+              <input id="angle-a" name="A" type="number" step="any" min="0" max="180" inputmode="decimal" />
+
+              <label for="angle-b">Angle B (deg)</label>
+              <input id="angle-b" name="B" type="number" step="any" min="0" max="180" inputmode="decimal" />
+
+              <label for="angle-c">Angle C (deg)</label>
+              <input id="angle-c" name="C" type="number" step="any" min="0" max="180" inputmode="decimal" />
+            </div>
+            <div class="lesson-links">
+              <button type="submit" class="solver-btn">Solve Triangle</button>
+              <button type="button" id="triangle-clear" class="solver-btn secondary">Clear</button>
+            </div>
+          </form>
+          <div id="triangle-result" class="triangle-result" aria-live="polite">
+            Enter values and click "Solve Triangle."
           </div>
         </article>
       </section>
     </main>
+    <script>
+      (function () {
+        const form = document.getElementById("triangle-solver-form");
+        const clearBtn = document.getElementById("triangle-clear");
+        const resultEl = document.getElementById("triangle-result");
+        const sideKeys = ["a", "b", "c"];
+        const angleKeys = ["A", "B", "C"];
+        const EPS = 1e-8;
+
+        function toRad(deg) {
+          return (deg * Math.PI) / 180;
+        }
+
+        function toDeg(rad) {
+          return (rad * 180) / Math.PI;
+        }
+
+        function round3(value) {
+          return Math.round(value * 1000) / 1000;
+        }
+
+        function clamp(x) {
+          return Math.max(-1, Math.min(1, x));
+        }
+
+        function parseValue(v) {
+          if (v === "" || v == null) return null;
+          const n = Number(v);
+          return Number.isFinite(n) ? n : null;
+        }
+
+        function findKnownIndexes(arr) {
+          const out = [];
+          for (let i = 0; i < arr.length; i += 1) {
+            if (arr[i] != null) out.push(i);
+          }
+          return out;
+        }
+
+        function validateInput(sides, angles) {
+          const knownSides = findKnownIndexes(sides);
+          const knownAngles = findKnownIndexes(angles);
+          const knownTotal = knownSides.length + knownAngles.length;
+
+          if (knownTotal !== 3) {
+            return "Enter exactly 3 known values total.";
+          }
+          if (knownSides.length < 1) {
+            return "At least one known value must be a side.";
+          }
+          for (const idx of knownSides) {
+            if (sides[idx] <= 0) return "Side lengths must be positive.";
+          }
+          for (const idx of knownAngles) {
+            if (angles[idx] <= 0 || angles[idx] >= 180) {
+              return "Each known angle must be between 0 and 180 degrees.";
+            }
+          }
+          if (knownAngles.length >= 2) {
+            const sum = knownAngles.reduce((acc, i) => acc + angles[i], 0);
+            if (sum >= 180 - EPS) return "Known angles must sum to less than 180 degrees.";
+          }
+          return null;
+        }
+
+        function solveSSS(sides) {
+          const [a, b, c] = sides;
+          if (a + b <= c || a + c <= b || b + c <= a) return [];
+
+          const A = toDeg(Math.acos(clamp((b * b + c * c - a * a) / (2 * b * c))));
+          const B = toDeg(Math.acos(clamp((a * a + c * c - b * b) / (2 * a * c))));
+          const C = 180 - A - B;
+
+          return [{ method: "Law of Cosines (SSS)", sides: [a, b, c], angles: [A, B, C] }];
+        }
+
+        function solveAASorASA(sides, angles) {
+          const s = sides.slice();
+          const A = angles.slice();
+          const knownAngles = findKnownIndexes(A);
+          const knownSide = findKnownIndexes(s)[0];
+          const missingAngle = [0, 1, 2].find((i) => A[i] == null);
+          A[missingAngle] = 180 - (A[knownAngles[0]] + A[knownAngles[1]]);
+          const ratio = s[knownSide] / Math.sin(toRad(A[knownSide]));
+          for (let i = 0; i < 3; i += 1) {
+            if (s[i] == null) s[i] = ratio * Math.sin(toRad(A[i]));
+          }
+          return [{ method: "Law of Sines (ASA/AAS)", sides: s, angles: A }];
+        }
+
+        function solveSAS(sides, angles, angleIdx) {
+          const s = sides.slice();
+          const A = angles.slice();
+          const knownSides = findKnownIndexes(s);
+          const i = knownSides[0];
+          const j = knownSides[1];
+          const k = angleIdx;
+          s[k] = Math.sqrt(s[i] * s[i] + s[j] * s[j] - 2 * s[i] * s[j] * Math.cos(toRad(A[k])));
+          if (s[k] <= 0) return [];
+          A[i] = toDeg(Math.acos(clamp((s[j] * s[j] + s[k] * s[k] - s[i] * s[i]) / (2 * s[j] * s[k]))));
+          A[j] = 180 - A[k] - A[i];
+          if (A[j] <= 0) return [];
+          return [{ method: "Law of Cosines (SAS)", sides: s, angles: A }];
+        }
+
+        function solveSSA(sides, angles, angleIdx) {
+          const s = sides.slice();
+          const A = angles.slice();
+          const knownSides = findKnownIndexes(s);
+          const i = angleIdx;
+          const j = knownSides.find((idx) => idx !== i);
+          const k = [0, 1, 2].find((idx) => idx !== i && idx !== j);
+          const sinJ = (s[j] * Math.sin(toRad(A[i]))) / s[i];
+          if (sinJ > 1 + EPS) return [];
+
+          const out = [];
+          const angleOptions = [];
+          if (Math.abs(sinJ - 1) <= EPS) {
+            angleOptions.push(90);
+          } else if (sinJ > 0) {
+            const base = toDeg(Math.asin(sinJ));
+            angleOptions.push(base);
+            angleOptions.push(180 - base);
+          }
+
+          for (const jAngle of angleOptions) {
+            const curA = A.slice();
+            const curS = s.slice();
+            curA[j] = jAngle;
+            curA[k] = 180 - curA[i] - curA[j];
+            if (curA[k] <= EPS) continue;
+            curS[k] = (curS[i] * Math.sin(toRad(curA[k]))) / Math.sin(toRad(curA[i]));
+            if (curS[k] <= EPS) continue;
+            out.push({ method: "Law of Sines (SSA)", sides: curS, angles: curA });
+          }
+
+          return out;
+        }
+
+        function solveTriangle(sides, angles) {
+          const knownSides = findKnownIndexes(sides);
+          const knownAngles = findKnownIndexes(angles);
+
+          if (knownSides.length === 3) return solveSSS(sides);
+          if (knownSides.length === 1 && knownAngles.length === 2) return solveAASorASA(sides, angles);
+          if (knownSides.length === 2 && knownAngles.length === 1) {
+            const angleIdx = knownAngles[0];
+            const isSSA = knownSides.includes(angleIdx);
+            return isSSA ? solveSSA(sides, angles, angleIdx) : solveSAS(sides, angles, angleIdx);
+          }
+          return [];
+        }
+
+        function renderSolution(solution, idx) {
+          const diagram = renderTriangleDiagram(solution);
+          return `
+            <div class="triangle-solution">
+              <p class="triangle-method">Solution ${idx + 1}: ${solution.method}</p>
+              ${diagram}
+              <p class="triangle-values">
+                a = ${round3(solution.sides[0])}, b = ${round3(solution.sides[1])}, c = ${round3(solution.sides[2])}
+              </p>
+              <p class="triangle-values">
+                A = ${round3(solution.angles[0])}deg, B = ${round3(solution.angles[1])}deg, C = ${round3(solution.angles[2])}deg
+              </p>
+            </div>
+          `;
+        }
+
+        function renderTriangleDiagram(solution) {
+          const [a, b, c] = solution.sides;
+          if (c <= EPS) return "";
+
+          const ax = 0;
+          const ay = 0;
+          const bx = c;
+          const by = 0;
+          const cx = (b * b + c * c - a * a) / (2 * c);
+          const cySq = Math.max(0, b * b - cx * cx);
+          const cy = Math.sqrt(cySq);
+
+          const pts = [
+            { x: ax, y: ay, v: "A" },
+            { x: bx, y: by, v: "B" },
+            { x: cx, y: cy, v: "C" },
+          ];
+
+          const minX = Math.min(...pts.map((p) => p.x));
+          const maxX = Math.max(...pts.map((p) => p.x));
+          const minY = Math.min(...pts.map((p) => p.y));
+          const maxY = Math.max(...pts.map((p) => p.y));
+          const width = Math.max(1, maxX - minX);
+          const height = Math.max(1, maxY - minY);
+
+          const svgW = 320;
+          const svgH = 220;
+          const pad = 24;
+          const scale = Math.min((svgW - 2 * pad) / width, (svgH - 2 * pad) / height);
+
+          function sx(x) {
+            return pad + (x - minX) * scale;
+          }
+          function sy(y) {
+            return svgH - pad - (y - minY) * scale;
+          }
+
+          const A = { x: sx(ax), y: sy(ay) };
+          const B = { x: sx(bx), y: sy(by) };
+          const C = { x: sx(cx), y: sy(cy) };
+
+          function mid(P, Q) {
+            return { x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 };
+          }
+
+          const ab = mid(A, B); // side c
+          const ac = mid(A, C); // side b
+          const bc = mid(B, C); // side a
+
+          return `
+            <svg class="triangle-diagram" viewBox="0 0 ${svgW} ${svgH}" role="img" aria-label="Triangle diagram">
+              <polygon points="${A.x},${A.y} ${B.x},${B.y} ${C.x},${C.y}" />
+              <circle cx="${A.x}" cy="${A.y}" r="3"></circle>
+              <circle cx="${B.x}" cy="${B.y}" r="3"></circle>
+              <circle cx="${C.x}" cy="${C.y}" r="3"></circle>
+              <text x="${A.x - 12}" y="${A.y + 16}" class="vertex-label">A</text>
+              <text x="${B.x + 8}" y="${B.y + 16}" class="vertex-label">B</text>
+              <text x="${C.x + 8}" y="${C.y - 8}" class="vertex-label">C</text>
+              <text x="${bc.x + 6}" y="${bc.y - 4}" class="side-label">a</text>
+              <text x="${ac.x - 12}" y="${ac.y - 4}" class="side-label">b</text>
+              <text x="${ab.x}" y="${ab.y + 16}" class="side-label">c</text>
+            </svg>
+          `;
+        }
+
+        function readInputs() {
+          const fd = new FormData(form);
+          const sides = sideKeys.map((k) => parseValue(fd.get(k)));
+          const angles = angleKeys.map((k) => parseValue(fd.get(k)));
+          return { sides, angles };
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const { sides, angles } = readInputs();
+          const err = validateInput(sides, angles);
+          if (err) {
+            resultEl.innerHTML = `<p class="triangle-error">${err}</p>`;
+            return;
+          }
+
+          const solutions = solveTriangle(sides, angles);
+          if (!solutions.length) {
+            resultEl.innerHTML = '<p class="triangle-error">No valid triangle found with the given values.</p>';
+            return;
+          }
+
+          const ambiguousNote =
+            solutions.length > 1
+              ? '<p class="course-note">Ambiguous SSA case: two valid triangles were found.</p>'
+              : "";
+
+          resultEl.innerHTML = ambiguousNote + solutions.map(renderSolution).join("");
+        });
+
+        clearBtn.addEventListener("click", function () {
+          form.reset();
+          resultEl.textContent = 'Enter values and click "Solve Triangle."';
+        });
+      })();
+    </script>
   </body>
 </html>
