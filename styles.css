@@ -126,6 +126,16 @@ h1 {
   color: var(--maroon-700);
 }
 
+.tool-link-list {
+  margin: 0.2rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.tool-link-list li + li {
+  margin-top: 0.4rem;
+}
+
 .embed-slot {
   margin-top: 0.7rem;
   border: 1px dashed #d7bec2;
