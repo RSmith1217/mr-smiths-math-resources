@@ -362,6 +362,8 @@
           scoresB: {},
           weights: {},
           suggestionTokens: { A: 0, B: 0 },
+          autofillTokens: { A: 0, B: 0 },
+          suggestionNames: { A: [], B: [] },
         };
 
         function criteriaForMode() {
@@ -763,7 +765,8 @@
             .filter((r) => r.name);
         }
 
-        function renderSuggestionList(listEl, options) {
+        function renderSuggestionList(choice, listEl, options) {
+          state.suggestionNames[choice] = options.map((opt) => opt.name);
           listEl.innerHTML = "";
           options.forEach((opt) => {
             const item = document.createElement("option");
@@ -785,6 +788,7 @@
           const listEl = choice === "A" ? els.collegeSuggestionsA : els.collegeSuggestionsB;
           const query = inputEl.value.trim();
           if (query.length < 2) {
+            state.suggestionNames[choice] = [];
             listEl.innerHTML = "";
             return;
           }
@@ -796,10 +800,63 @@
             if (token !== state.suggestionTokens[choice]) {
               return;
             }
-            renderSuggestionList(listEl, options);
+            renderSuggestionList(choice, listEl, options);
           } catch (err) {
             if (token === state.suggestionTokens[choice]) {
+              state.suggestionNames[choice] = [];
               listEl.innerHTML = "";
+            }
+          }
+        }
+
+        async function autofillCollegeChoice(choice) {
+          if (state.mode !== "college") {
+            return;
+          }
+
+          const inputEl = choice === "A" ? els.nameA : els.nameB;
+          const name = safeName(inputEl.value, "");
+          if (!name) {
+            return;
+          }
+
+          state.autofillTokens[choice] += 1;
+          const token = state.autofillTokens[choice];
+          try {
+            const result = await fetchCollegeScorecardByName(name);
+            if (token !== state.autofillTokens[choice]) {
+              return;
+            }
+            if (!result) {
+              els.modeMeta.textContent =
+                "No exact college data match found for \"" + name + "\". Try selecting a suggestion.";
+              return;
+            }
+            const mapped = mapCollegeDataToCriteria(result);
+            const target = choice === "A" ? state.scoresA : state.scoresB;
+            let updatedCount = 0;
+            Object.keys(mapped).forEach((key) => {
+              if (mapped[key] !== null && mapped[key] !== undefined) {
+                target[key] = mapped[key];
+                updatedCount += 1;
+              }
+            });
+            renderInputs();
+            renderComparison();
+            els.modeMeta.textContent =
+              "Updated " +
+              (choice === "A" ? "Choice A" : "Choice B") +
+              " with " +
+              updatedCount +
+              " College Scorecard values for " +
+              name +
+              ".";
+          } catch (err) {
+            if (token === state.autofillTokens[choice]) {
+              els.modeMeta.textContent =
+                "Could not auto-fill " +
+                name +
+                ". Check API key/network and try again.";
             }
           }
         }
@@ -917,6 +974,8 @@
               "Restaurant mode compares public signals like ratings, price, distance, and wait time.";
             els.contextInput.placeholder = "City, neighborhood, or cuisine type";
             els.locationRow.querySelector("label").textContent = "Location / Cuisine";
+            state.suggestionNames.A = [];
+            state.suggestionNames.B = [];
             els.collegeSuggestionsA.innerHTML = "";
             els.collegeSuggestionsB.innerHTML = "";
           } else {
@@ -937,13 +996,47 @@
         els.modeCollege.addEventListener("click", () => setMode("college"));
         const debouncedSuggestA = debounce(() => updateCollegeSuggestions("A"), 280);
         const debouncedSuggestB = debounce(() => updateCollegeSuggestions("B"), 280);
+        const debouncedAutofillA = debounce(() => autofillCollegeChoice("A"), 350);
+        const debouncedAutofillB = debounce(() => autofillCollegeChoice("B"), 350);
         els.nameA.addEventListener("input", () => {
           renderComparison();
           debouncedSuggestA();
+          const typed = els.nameA.value.trim();
+          if (state.suggestionNames.A.includes(typed)) {
+            debouncedAutofillA();
+          }
         });
         els.nameB.addEventListener("input", () => {
           renderComparison();
           debouncedSuggestB();
+          const typed = els.nameB.value.trim();
+          if (state.suggestionNames.B.includes(typed)) {
+            debouncedAutofillB();
+          }
+        });
+        els.nameA.addEventListener("focus", () => {
+          if (els.nameA.value === "Option A") {
+            els.nameA.value = "";
+            renderComparison();
+          }
+        });
+        els.nameB.addEventListener("focus", () => {
+          if (els.nameB.value === "Option B") {
+            els.nameB.value = "";
+            renderComparison();
+          }
+        });
+        els.nameA.addEventListener("change", () => autofillCollegeChoice("A"));
+        els.nameB.addEventListener("change", () => autofillCollegeChoice("B"));
+        els.nameA.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            autofillCollegeChoice("A");
+          }
+        });
+        els.nameB.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            autofillCollegeChoice("B");
+          }
         });
         els.contextInput.addEventListener("input", renderComparison);
         els.autofillCollege.addEventListener("click", (e) => {
@@ -970,8 +1063,8 @@
         });
 
         setMode("restaurant");
-        els.nameA.value = "Option A";
-        els.nameB.value = "Option B";
+        els.nameA.value = "";
+        els.nameB.value = "";
         renderComparison();
       })();
     </script>
