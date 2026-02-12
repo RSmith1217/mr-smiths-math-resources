@@ -52,9 +52,9 @@
               <h3>Choice A</h3>
               <div class="tool-grid">
                 <label for="nameA">Name</label>
-                <input id="nameA" type="text" placeholder="Option A" list="collegeSuggestionsA" />
+                <input id="nameA" type="text" placeholder="Option A" autocomplete="off" />
               </div>
-              <datalist id="collegeSuggestionsA"></datalist>
+              <div id="collegeSuggestionsA" class="suggestion-box" aria-live="polite"></div>
               <div id="inputsA" class="criteria-inputs" aria-label="Choice A criteria"></div>
             </article>
 
@@ -62,9 +62,9 @@
               <h3>Choice B</h3>
               <div class="tool-grid">
                 <label for="nameB">Name</label>
-                <input id="nameB" type="text" placeholder="Option B" list="collegeSuggestionsB" />
+                <input id="nameB" type="text" placeholder="Option B" autocomplete="off" />
               </div>
-              <datalist id="collegeSuggestionsB"></datalist>
+              <div id="collegeSuggestionsB" class="suggestion-box" aria-live="polite"></div>
               <div id="inputsB" class="criteria-inputs" aria-label="Choice B criteria"></div>
             </article>
           </div>
@@ -768,15 +768,31 @@
         function renderSuggestionList(choice, listEl, options) {
           state.suggestionNames[choice] = options.map((opt) => opt.name);
           listEl.innerHTML = "";
+          if (!options.length) {
+            listEl.classList.remove("is-open");
+            return;
+          }
           options.forEach((opt) => {
-            const item = document.createElement("option");
-            item.value = opt.name;
+            const item = document.createElement("button");
+            item.type = "button";
+            item.className = "suggestion-item";
+            item.textContent = opt.name;
             const location = [opt.city, opt.state].filter(Boolean).join(", ");
             if (location) {
-              item.label = opt.name + " (" + location + ")";
+              item.textContent = opt.name + " (" + location + ")";
             }
+            item.addEventListener("mousedown", (e) => {
+              e.preventDefault();
+              const inputEl = choice === "A" ? els.nameA : els.nameB;
+              inputEl.value = opt.name;
+              listEl.classList.remove("is-open");
+              listEl.innerHTML = "";
+              renderComparison();
+              autofillCollegeChoice(choice);
+            });
             listEl.appendChild(item);
           });
+          listEl.classList.add("is-open");
         }
 
         async function updateCollegeSuggestions(choice) {
@@ -790,6 +806,7 @@
           if (query.length < 2) {
             state.suggestionNames[choice] = [];
             listEl.innerHTML = "";
+            listEl.classList.remove("is-open");
             return;
           }
 
@@ -801,10 +818,17 @@
               return;
             }
             renderSuggestionList(choice, listEl, options);
+            if (!options.length) {
+              els.modeMeta.textContent =
+                "No suggestion matches yet. Keep typing or use the full college name.";
+            }
           } catch (err) {
             if (token === state.suggestionTokens[choice]) {
               state.suggestionNames[choice] = [];
               listEl.innerHTML = "";
+              listEl.classList.remove("is-open");
+              els.modeMeta.textContent =
+                "Autosuggest lookup failed. Check API key/network or continue by typing the full school name.";
             }
           }
         }
@@ -978,6 +1002,8 @@
             state.suggestionNames.B = [];
             els.collegeSuggestionsA.innerHTML = "";
             els.collegeSuggestionsB.innerHTML = "";
+            els.collegeSuggestionsA.classList.remove("is-open");
+            els.collegeSuggestionsB.classList.remove("is-open");
           } else {
             els.modeCollege.classList.add("is-active");
             els.modeCollege.classList.remove("secondary");
@@ -1028,6 +1054,16 @@
         });
         els.nameA.addEventListener("change", () => autofillCollegeChoice("A"));
         els.nameB.addEventListener("change", () => autofillCollegeChoice("B"));
+        els.nameA.addEventListener("blur", () => {
+          setTimeout(() => {
+            els.collegeSuggestionsA.classList.remove("is-open");
+          }, 120);
+        });
+        els.nameB.addEventListener("blur", () => {
+          setTimeout(() => {
+            els.collegeSuggestionsB.classList.remove("is-open");
+          }, 120);
+        });
         els.nameA.addEventListener("keydown", (e) => {
           if (e.key === "Enter") {
             autofillCollegeChoice("A");
@@ -1060,6 +1096,14 @@
           localStorage.removeItem(POLL_KEY);
           renderPollCount();
           els.modeMeta.textContent = "Cleared all saved poll data.";
+        });
+        document.addEventListener("click", (e) => {
+          if (!els.nameA.contains(e.target) && !els.collegeSuggestionsA.contains(e.target)) {
+            els.collegeSuggestionsA.classList.remove("is-open");
+          }
+          if (!els.nameB.contains(e.target) && !els.collegeSuggestionsB.contains(e.target)) {
+            els.collegeSuggestionsB.classList.remove("is-open");
+          }
         });
 
         setMode("restaurant");
