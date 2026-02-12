@@ -71,7 +71,7 @@ h1 {
 .top-links {
   margin-top: 0.9rem;
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   align-items: stretch;
   gap: 0.6rem;
   position: sticky;
@@ -712,6 +712,151 @@ a:focus-visible {
   margin-top: 0.45rem;
 }
 
+.decide-panel {
+  background: linear-gradient(155deg, #fff 0%, #f8f6f6 48%, #fdf8f9 100%);
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.solver-btn.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.decide-note {
+  margin: 0.5rem 0 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.75rem;
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.decide-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.decide-choice {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fff;
+  padding: 0.8rem;
+}
+
+.criteria-inputs {
+  margin-top: 0.55rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.criteria-row {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) 88px;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.criteria-row label {
+  font-size: 0.84rem;
+  color: var(--maroon-700);
+  font-weight: 600;
+}
+
+.criteria-row input {
+  width: 100%;
+  border: 1px solid #d7bec2;
+  border-radius: 10px;
+  padding: 0.36rem 0.45rem;
+  font: inherit;
+  color: var(--text-primary);
+  background: #fff;
+}
+
+.criteria-row input:focus-visible,
+.weight-slider:focus-visible {
+  outline: 2px solid rgba(122, 0, 0, 0.18);
+  border-color: var(--accent);
+}
+
+.decide-location-row {
+  margin-top: 0.75rem;
+}
+
+.decide-actions {
+  margin-top: 0.8rem;
+}
+
+.decide-autofill,
+.decide-polls {
+  margin-top: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fff;
+  padding: 0.7rem 0.8rem;
+}
+
+.decide-polls .lesson-summary {
+  margin: 0.45rem 0 0.6rem;
+}
+
+.decide-polls .course-note,
+.decide-autofill .course-note {
+  margin-top: 0.6rem;
+}
+
+.decide-table-wrap {
+  margin-top: 0.8rem;
+}
+
+.weight-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weight-slider {
+  width: 108px;
+  accent-color: var(--accent);
+}
+
+.weight-value {
+  min-width: 1.2rem;
+  text-align: right;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--maroon-700);
+}
+
+.edge-a {
+  color: #2d5b2d;
+  font-weight: 700;
+}
+
+.edge-b {
+  color: #244f7a;
+  font-weight: 700;
+}
+
+.edge-tie {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.decide-summary {
+  margin-top: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fff;
+  padding: 0.7rem 0.8rem;
+}
+
 @media (max-width: 640px) {
   .site-header {
     padding-top: 3.2rem;
@@ -741,6 +886,10 @@ a:focus-visible {
   }
 
   .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .decide-grid {
     grid-template-columns: 1fr;
   }
 

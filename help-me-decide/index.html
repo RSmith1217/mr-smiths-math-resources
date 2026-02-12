@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help Me Decide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../docs/styles.css" />
+  </head>
+  <body>
+    <div class="page-bg" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <p class="eyebrow">Beta Decision Lab</p>
+        <h1>Help Me Decide</h1>
+        <p class="intro">
+          Compare two options side-by-side using transparent criteria. This tool surfaces tradeoffs,
+          not final verdicts.
+        </p>
+        <div class="top-links" aria-label="Navigation">
+          <a class="quick-link" href="../docs/index.html">Home</a>
+          <a class="quick-link" href="index.html">Help Me Decide</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="class-grid">
+        <article class="class-card full-width decide-panel">
+          <div class="card-title-row">
+            <h2>Comparison Mode</h2>
+            <div class="mode-toggle" role="tablist" aria-label="Comparison mode">
+              <button id="modeRestaurant" class="solver-btn is-active" type="button">Restaurant</button>
+              <button id="modeCollege" class="solver-btn secondary" type="button">College</button>
+            </div>
+          </div>
+          <p class="card-description">
+            Enter the two options, fill in available criteria, and inspect where each one has an
+            edge.
+          </p>
+
+          <div id="modeMeta" class="decide-note"></div>
+
+          <div class="decide-grid">
+            <article class="decide-choice">
+              <h3>Choice A</h3>
+              <div class="tool-grid">
+                <label for="nameA">Name</label>
+                <input id="nameA" type="text" placeholder="Option A" list="collegeSuggestionsA" />
+              </div>
+              <datalist id="collegeSuggestionsA"></datalist>
+              <div id="inputsA" class="criteria-inputs" aria-label="Choice A criteria"></div>
+            </article>
+
+            <article class="decide-choice">
+              <h3>Choice B</h3>
+              <div class="tool-grid">
+                <label for="nameB">Name</label>
+                <input id="nameB" type="text" placeholder="Option B" list="collegeSuggestionsB" />
+              </div>
+              <datalist id="collegeSuggestionsB"></datalist>
+              <div id="inputsB" class="criteria-inputs" aria-label="Choice B criteria"></div>
+            </article>
+          </div>
+
+          <div class="tool-grid decide-location-row" id="locationRow">
+            <label for="contextInput">Context</label>
+            <input
+              id="contextInput"
+              type="text"
+              placeholder="City, neighborhood, or other context"
+            />
+          </div>
+
+          <div class="decide-autofill">
+            <p class="assessment-title">Auto-Fill</p>
+            <div class="tool-grid">
+              <label for="scorecardApiKey">College Scorecard API Key</label>
+              <input id="scorecardApiKey" type="text" placeholder="DEMO_KEY" value="DEMO_KEY" />
+            </div>
+            <div class="lesson-links">
+              <a href="#" id="autofillCollege">Autofill Colleges (Public Data)</a>
+              <a href="#" id="autofillPolls">Autofill from Poll Averages</a>
+            </div>
+            <p class="course-note">
+              Public-data autofill currently supports college metrics first; restaurant sources like
+              Yelp/Google usually need keys + a backend proxy for reliable integration.
+            </p>
+          </div>
+
+          <div class="decide-polls">
+            <p class="assessment-title">Poll Data</p>
+            <p class="lesson-summary">
+              Save current values as poll submissions. Repeated submissions build stronger averages
+              for future autofill.
+            </p>
+            <div class="lesson-links">
+              <a href="#" id="savePollA">Save Poll for Choice A</a>
+              <a href="#" id="savePollB">Save Poll for Choice B</a>
+              <a href="#" id="clearPolls">Clear All Poll Data</a>
+            </div>
+            <p class="course-note" id="pollCount"></p>
+          </div>
+
+          <div class="lesson-links decide-actions">
+            <a href="#" id="searchA" target="_blank" rel="noopener noreferrer">Search Choice A</a>
+            <a href="#" id="searchB" target="_blank" rel="noopener noreferrer">Search Choice B</a>
+          </div>
+
+          <div class="table-wrap decide-table-wrap">
+            <table class="resource-table" id="comparisonTable">
+              <thead>
+                <tr>
+                  <th>Criterion</th>
+                  <th>Weight (1-10)</th>
+                  <th id="colA">Choice A</th>
+                  <th id="colB">Choice B</th>
+                  <th>Edge</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonBody"></tbody>
+            </table>
+          </div>
+
+          <div class="decide-summary" id="summary"></div>
+
+          <p class="course-note">
+            Tip: restaurant metrics can come from Yelp/Google/Resy/OpenTable. College metrics can
+            come from College Scorecard, Common Data Sets, and Niche.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const restaurantCriteria = [
+          {
+            id: "rating",
+            label: "Average Rating",
+            min: 0,
+            max: 5,
+            step: 0.1,
+            weight: 3,
+            higherBetter: true,
+            source: "Yelp / Google",
+          },
+          {
+            id: "priceLevel",
+            label: "Price Level",
+            min: 1,
+            max: 4,
+            step: 1,
+            weight: 2,
+            higherBetter: false,
+            source: "Yelp / Google",
+          },
+          {
+            id: "distance",
+            label: "Distance (miles)",
+            min: 0,
+            max: 30,
+            step: 0.1,
+            weight: 3,
+            higherBetter: false,
+            source: "Maps",
+          },
+          {
+            id: "wait",
+            label: "Typical Wait (minutes)",
+            min: 0,
+            max: 120,
+            step: 1,
+            weight: 2,
+            higherBetter: false,
+            source: "Resy / OpenTable",
+          },
+          {
+            id: "reviews",
+            label: "Review Volume",
+            min: 0,
+            max: 10000,
+            step: 10,
+            weight: 2,
+            higherBetter: true,
+            source: "Yelp / Google",
+          },
+          {
+            id: "dietary",
+            label: "Dietary Fit (1-5)",
+            min: 1,
+            max: 5,
+            step: 1,
+            weight: 2,
+            higherBetter: true,
+            source: "Menu / Reviews",
+          },
+          {
+            id: "vibe",
+            label: "Vibe Match (1-5)",
+            min: 1,
+            max: 5,
+            step: 1,
+            weight: 2,
+            higherBetter: true,
+            source: "Photos / Reviews",
+          },
+          {
+            id: "late",
+            label: "Late Availability (1-5)",
+            min: 1,
+            max: 5,
+            step: 1,
+            weight: 1,
+            higherBetter: true,
+            source: "Hours",
+          },
+        ];
+
+        const collegeCriteria = [
+          {
+            id: "netPrice",
+            label: "Net Price ($/yr)",
+            min: 5000,
+            max: 90000,
+            step: 500,
+            weight: 8,
+            higherBetter: false,
+            source: "College Scorecard",
+          },
+          {
+            id: "graduationRate",
+            label: "Graduation Rate (%)",
+            min: 0,
+            max: 100,
+            step: 1,
+            weight: 9,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+          {
+            id: "retentionRate",
+            label: "Retention Rate (%)",
+            min: 0,
+            max: 100,
+            step: 1,
+            weight: 8,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+          {
+            id: "earnings10yr",
+            label: "Median Earnings 10y ($)",
+            min: 20000,
+            max: 150000,
+            step: 1000,
+            weight: 9,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+          {
+            id: "medianDebt",
+            label: "Median Debt ($)",
+            min: 0,
+            max: 80000,
+            step: 500,
+            weight: 7,
+            higherBetter: false,
+            source: "College Scorecard",
+          },
+          {
+            id: "repaymentRate",
+            label: "Repayment Rate (%)",
+            min: 0,
+            max: 100,
+            step: 1,
+            weight: 7,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+          {
+            id: "facultyRatio",
+            label: "Student-Faculty Ratio",
+            min: 5,
+            max: 40,
+            step: 0.1,
+            weight: 6,
+            higherBetter: false,
+            source: "College Scorecard",
+          },
+          {
+            id: "satAverage",
+            label: "Average SAT",
+            min: 800,
+            max: 1600,
+            step: 10,
+            weight: 5,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+          {
+            id: "pellRate",
+            label: "Pell Grant Rate (%)",
+            min: 0,
+            max: 100,
+            step: 1,
+            weight: 4,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+          {
+            id: "admissionRate",
+            label: "Admission Rate (%)",
+            min: 0,
+            max: 100,
+            step: 1,
+            weight: 3,
+            higherBetter: true,
+            source: "College Scorecard",
+          },
+        ];
+
+        const els = {
+          modeRestaurant: document.getElementById("modeRestaurant"),
+          modeCollege: document.getElementById("modeCollege"),
+          modeMeta: document.getElementById("modeMeta"),
+          nameA: document.getElementById("nameA"),
+          nameB: document.getElementById("nameB"),
+          collegeSuggestionsA: document.getElementById("collegeSuggestionsA"),
+          collegeSuggestionsB: document.getElementById("collegeSuggestionsB"),
+          inputsA: document.getElementById("inputsA"),
+          inputsB: document.getElementById("inputsB"),
+          contextInput: document.getElementById("contextInput"),
+          locationRow: document.getElementById("locationRow"),
+          scorecardApiKey: document.getElementById("scorecardApiKey"),
+          autofillCollege: document.getElementById("autofillCollege"),
+          autofillPolls: document.getElementById("autofillPolls"),
+          savePollA: document.getElementById("savePollA"),
+          savePollB: document.getElementById("savePollB"),
+          clearPolls: document.getElementById("clearPolls"),
+          pollCount: document.getElementById("pollCount"),
+          searchA: document.getElementById("searchA"),
+          searchB: document.getElementById("searchB"),
+          comparisonBody: document.getElementById("comparisonBody"),
+          colA: document.getElementById("colA"),
+          colB: document.getElementById("colB"),
+          summary: document.getElementById("summary"),
+        };
+
+        const POLL_KEY = "help-me-decide-polls-v1";
+
+        const state = {
+          mode: "restaurant",
+          scoresA: {},
+          scoresB: {},
+          weights: {},
+          suggestionTokens: { A: 0, B: 0 },
+        };
+
+        function criteriaForMode() {
+          return state.mode === "restaurant" ? restaurantCriteria : collegeCriteria;
+        }
+
+        function safeName(value, fallback) {
+          const v = String(value || "").trim();
+          return v || fallback;
+        }
+
+        function renderInputs() {
+          const criteria = criteriaForMode();
+          els.inputsA.innerHTML = "";
+          els.inputsB.innerHTML = "";
+
+          criteria.forEach((c) => {
+            if (!(c.id in state.weights)) {
+              state.weights[c.id] = c.weight;
+            }
+            if (!(c.id in state.scoresA)) {
+              state.scoresA[c.id] = c.min;
+            }
+            if (!(c.id in state.scoresB)) {
+              state.scoresB[c.id] = c.min;
+            }
+
+            const rowA = document.createElement("div");
+            rowA.className = "criteria-row";
+            rowA.innerHTML =
+              '<label for="a-' +
+              c.id +
+              '">' +
+              c.label +
+              '</label><input id="a-' +
+              c.id +
+              '" type="number" min="' +
+              c.min +
+              '" max="' +
+              c.max +
+              '" step="' +
+              c.step +
+              '" value="' +
+              state.scoresA[c.id] +
+              '" />';
+            rowA.querySelector("input").addEventListener("input", (e) => {
+              state.scoresA[c.id] = Number(e.target.value || c.min);
+              renderComparison();
+            });
+            els.inputsA.appendChild(rowA);
+
+            const rowB = document.createElement("div");
+            rowB.className = "criteria-row";
+            rowB.innerHTML =
+              '<label for="b-' +
+              c.id +
+              '">' +
+              c.label +
+              '</label><input id="b-' +
+              c.id +
+              '" type="number" min="' +
+              c.min +
+              '" max="' +
+              c.max +
+              '" step="' +
+              c.step +
+              '" value="' +
+              state.scoresB[c.id] +
+              '" />';
+            rowB.querySelector("input").addEventListener("input", (e) => {
+              state.scoresB[c.id] = Number(e.target.value || c.min);
+              renderComparison();
+            });
+            els.inputsB.appendChild(rowB);
+          });
+        }
+
+        function buildSearchUrl(name) {
+          const context = encodeURIComponent(els.contextInput.value.trim());
+          const query = encodeURIComponent(name.trim());
+          if (!query) {
+            return "https://www.google.com";
+          }
+          const joined = context ? query + "%20" + context : query;
+          return "https://www.google.com/search?q=" + joined;
+        }
+
+        function edgeLabel(a, b, higherBetter) {
+          const diff = Number(a) - Number(b);
+          if (Math.abs(diff) < 0.001) {
+            return "Tie";
+          }
+          if (higherBetter) {
+            return diff > 0 ? "A" : "B";
+          }
+          return diff < 0 ? "A" : "B";
+        }
+
+        function normalizeForVerdict(value, criterion) {
+          const clamped = clampScore(value, criterion.min, criterion.max);
+          const range = criterion.max - criterion.min;
+          if (range <= 0) {
+            return 0;
+          }
+          let normalized = (clamped - criterion.min) / range;
+          if (!criterion.higherBetter) {
+            normalized = 1 - normalized;
+          }
+          return normalized;
+        }
+
+        function displayValue(value, criterion) {
+          const n = Number(value);
+          if (Number.isNaN(n)) {
+            return "-";
+          }
+          if (criterion.label.includes("($")) {
+            return "$" + Math.round(n).toLocaleString();
+          }
+          if (criterion.label.includes("(%)")) {
+            return Math.round(n) + "%";
+          }
+          if (criterion.step < 1) {
+            return n.toFixed(1);
+          }
+          return Math.round(n).toString();
+        }
+
+        function renderComparison() {
+          const criteria = criteriaForMode();
+          const nameA = safeName(els.nameA.value, "Choice A");
+          const nameB = safeName(els.nameB.value, "Choice B");
+
+          els.colA.textContent = nameA;
+          els.colB.textContent = nameB;
+          els.searchA.href = buildSearchUrl(nameA);
+          els.searchB.href = buildSearchUrl(nameB);
+          els.searchA.textContent = "Search " + nameA;
+          els.searchB.textContent = "Search " + nameB;
+
+          let weightedA = 0;
+          let weightedB = 0;
+          let winsA = 0;
+          let winsB = 0;
+          let totalWeight = 0;
+
+          const rows = criteria
+            .map((c) => {
+              const a = Number(state.scoresA[c.id]);
+              const b = Number(state.scoresB[c.id]);
+              const w = Number(state.weights[c.id] || c.weight);
+              const normA = normalizeForVerdict(a, c);
+              const normB = normalizeForVerdict(b, c);
+              const edge = edgeLabel(normA, normB, true);
+              totalWeight += w;
+              weightedA += normA * w;
+              weightedB += normB * w;
+
+              if (edge === "A") {
+                winsA += 1;
+              } else if (edge === "B") {
+                winsB += 1;
+              }
+
+              return (
+                "<tr>" +
+                "<td>" +
+                c.label +
+                "</td>" +
+                '<td><div class="weight-cell"><input class="weight-slider" data-id="' +
+                c.id +
+                '" type="range" min="1" max="10" step="1" value="' +
+                w +
+                '" /><span class="weight-value">' +
+                w +
+                "</span></div></td>" +
+                "<td>" +
+                displayValue(a, c) +
+                "</td>" +
+                "<td>" +
+                displayValue(b, c) +
+                "</td>" +
+                '<td class="edge-' +
+                edge.toLowerCase() +
+                '">' +
+                edge +
+                "</td>" +
+                "<td>" +
+                c.source +
+                "</td>" +
+                "</tr>"
+              );
+            })
+            .join("");
+
+          const scoreA = totalWeight > 0 ? (weightedA / totalWeight) * 100 : 0;
+          const scoreB = totalWeight > 0 ? (weightedB / totalWeight) * 100 : 0;
+          const delta = scoreA - scoreB;
+          let verdict = "Too close to call";
+          let verdictClass = "edge-tie";
+          if (Math.abs(delta) >= 1) {
+            if (delta > 0) {
+              verdict = nameA + " is the recommended choice based on your current weights.";
+              verdictClass = "edge-a";
+            } else {
+              verdict = nameB + " is the recommended choice based on your current weights.";
+              verdictClass = "edge-b";
+            }
+          }
+
+          els.comparisonBody.innerHTML = rows;
+          els.summary.innerHTML =
+            '<p class="triangle-method">Verdict</p>' +
+            '<p class="triangle-values ' +
+            verdictClass +
+            '">' +
+            verdict +
+            "</p>" +
+            "<p class=\"triangle-values\">" +
+            nameA +
+            ": " +
+            winsA +
+            " criteria edge(s), weighted score " +
+            scoreA.toFixed(1) +
+            "</p>" +
+            "<p class=\"triangle-values\">" +
+            nameB +
+            ": " +
+            winsB +
+            " criteria edge(s), weighted score " +
+            scoreB.toFixed(1) +
+            "</p>";
+
+          els.comparisonBody.querySelectorAll(".weight-slider").forEach((input) => {
+            input.addEventListener("input", (e) => {
+              const id = e.target.dataset.id;
+              state.weights[id] = Math.max(1, Math.min(10, Number(e.target.value || 1)));
+              renderComparison();
+            });
+          });
+
+          renderPollCount();
+        }
+
+        function loadPolls() {
+          try {
+            const raw = localStorage.getItem(POLL_KEY);
+            if (!raw) {
+              return [];
+            }
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+          } catch (err) {
+            return [];
+          }
+        }
+
+        function savePolls(polls) {
+          localStorage.setItem(POLL_KEY, JSON.stringify(polls));
+        }
+
+        function renderPollCount() {
+          const polls = loadPolls();
+          els.pollCount.textContent = "Saved poll submissions: " + polls.length;
+        }
+
+        function clampScore(value, min, max) {
+          return Math.max(min, Math.min(max, Number(value)));
+        }
+
+        function debounce(fn, waitMs) {
+          let timer = null;
+          return function debounced() {
+            const args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(null, args), waitMs);
+          };
+        }
+
+        function savePollForChoice(choice) {
+          const name = choice === "A" ? safeName(els.nameA.value, "Choice A") : safeName(els.nameB.value, "Choice B");
+          const scores = choice === "A" ? state.scoresA : state.scoresB;
+          const criteria = criteriaForMode();
+
+          const payloadScores = {};
+          criteria.forEach((c) => {
+            payloadScores[c.id] = clampScore(scores[c.id], c.min, c.max);
+          });
+
+          const polls = loadPolls();
+          polls.push({
+            mode: state.mode,
+            optionName: name.toLowerCase(),
+            scores: payloadScores,
+            createdAt: new Date().toISOString(),
+          });
+          savePolls(polls);
+          renderPollCount();
+          els.modeMeta.textContent = "Saved poll submission for " + name + ".";
+        }
+
+        function applyPollAverages() {
+          const polls = loadPolls();
+          const criteria = criteriaForMode();
+          const names = {
+            A: safeName(els.nameA.value, "Choice A").toLowerCase(),
+            B: safeName(els.nameB.value, "Choice B").toLowerCase(),
+          };
+
+          ["A", "B"].forEach((choice) => {
+            const matches = polls.filter(
+              (p) => p.mode === state.mode && p.optionName === names[choice]
+            );
+            if (!matches.length) {
+              return;
+            }
+
+            const target = choice === "A" ? state.scoresA : state.scoresB;
+            criteria.forEach((c) => {
+              let total = 0;
+              let count = 0;
+              matches.forEach((m) => {
+                if (m.scores && m.scores[c.id] !== undefined) {
+                  total += Number(m.scores[c.id]);
+                  count += 1;
+                }
+              });
+              if (count > 0) {
+                const avg = total / count;
+                target[c.id] = clampScore(avg, c.min, c.max);
+              }
+            });
+          });
+
+          renderInputs();
+          renderComparison();
+          els.modeMeta.textContent =
+            "Applied poll averages where matching submissions were found for current option names.";
+        }
+
+        async function fetchCollegeScorecardByName(name) {
+          const apiKey = (els.scorecardApiKey.value || "DEMO_KEY").trim();
+          const fields = [
+            "school.name",
+            "latest.completion.rate_suppressed.overall",
+            "latest.earnings.10_yrs_after_entry.median",
+            "latest.cost.avg_net_price.overall",
+            "latest.student.retention_rate.four_year.full_time",
+            "latest.student.faculty_ratio",
+            "latest.aid.median_debt.completers.overall",
+            "latest.repayment.3_yr_repayment_suppressed.overall",
+            "latest.admissions.sat_scores.average.overall",
+            "latest.aid.pell_grant_rate",
+            "latest.admissions.admission_rate.overall",
+          ].join(",");
+
+          const url =
+            "https://api.data.gov/ed/collegescorecard/v1/schools?api_key=" +
+            encodeURIComponent(apiKey) +
+            "&school.name=" +
+            encodeURIComponent(name) +
+            "&per_page=1&fields=" +
+            encodeURIComponent(fields);
+
+          const res = await fetch(url);
+          if (!res.ok) {
+            throw new Error("College Scorecard request failed (" + res.status + ")");
+          }
+          const data = await res.json();
+          return data && Array.isArray(data.results) && data.results.length ? data.results[0] : null;
+        }
+
+        async function fetchCollegeSuggestions(query) {
+          const apiKey = (els.scorecardApiKey.value || "DEMO_KEY").trim();
+          const fields = ["school.name", "school.city", "school.state"].join(",");
+          const url =
+            "https://api.data.gov/ed/collegescorecard/v1/schools?api_key=" +
+            encodeURIComponent(apiKey) +
+            "&school.name=" +
+            encodeURIComponent(query) +
+            "&per_page=8&sort=school.name:asc&fields=" +
+            encodeURIComponent(fields);
+
+          const res = await fetch(url);
+          if (!res.ok) {
+            throw new Error("Suggestion lookup failed (" + res.status + ")");
+          }
+          const data = await res.json();
+          if (!data || !Array.isArray(data.results)) {
+            return [];
+          }
+
+          return data.results
+            .map((r) => ({
+              name: r["school.name"],
+              city: r["school.city"],
+              state: r["school.state"],
+            }))
+            .filter((r) => r.name);
+        }
+
+        function renderSuggestionList(listEl, options) {
+          listEl.innerHTML = "";
+          options.forEach((opt) => {
+            const item = document.createElement("option");
+            item.value = opt.name;
+            const location = [opt.city, opt.state].filter(Boolean).join(", ");
+            if (location) {
+              item.label = opt.name + " (" + location + ")";
+            }
+            listEl.appendChild(item);
+          });
+        }
+
+        async function updateCollegeSuggestions(choice) {
+          if (state.mode !== "college") {
+            return;
+          }
+
+          const inputEl = choice === "A" ? els.nameA : els.nameB;
+          const listEl = choice === "A" ? els.collegeSuggestionsA : els.collegeSuggestionsB;
+          const query = inputEl.value.trim();
+          if (query.length < 2) {
+            listEl.innerHTML = "";
+            return;
+          }
+
+          state.suggestionTokens[choice] += 1;
+          const token = state.suggestionTokens[choice];
+          try {
+            const options = await fetchCollegeSuggestions(query);
+            if (token !== state.suggestionTokens[choice]) {
+              return;
+            }
+            renderSuggestionList(listEl, options);
+          } catch (err) {
+            if (token === state.suggestionTokens[choice]) {
+              listEl.innerHTML = "";
+            }
+          }
+        }
+
+        function valueOrNull(value) {
+          if (value === null || value === undefined || Number.isNaN(Number(value))) {
+            return null;
+          }
+          return Number(value);
+        }
+
+        function rateToPct(value) {
+          const n = valueOrNull(value);
+          if (n === null) {
+            return null;
+          }
+          return Math.round(n * 100);
+        }
+
+        function mapCollegeDataToCriteria(result) {
+          if (!result) {
+            return {};
+          }
+
+          const gradRate = Number(result["latest.completion.rate_suppressed.overall"]);
+          const earnings = Number(result["latest.earnings.10_yrs_after_entry.median"]);
+          const netPrice = Number(result["latest.cost.avg_net_price.overall"]);
+          const retention = Number(result["latest.student.retention_rate.four_year.full_time"]);
+          const facultyRatio = Number(result["latest.student.faculty_ratio"]);
+          const medianDebt = Number(result["latest.aid.median_debt.completers.overall"]);
+          const repayment = Number(result["latest.repayment.3_yr_repayment_suppressed.overall"]);
+          const sat = Number(result["latest.admissions.sat_scores.average.overall"]);
+          const pell = Number(result["latest.aid.pell_grant_rate"]);
+          const admission = Number(result["latest.admissions.admission_rate.overall"]);
+
+          return {
+            netPrice: valueOrNull(netPrice),
+            graduationRate: rateToPct(gradRate),
+            retentionRate: rateToPct(retention),
+            earnings10yr: valueOrNull(earnings),
+            medianDebt: valueOrNull(medianDebt),
+            repaymentRate: rateToPct(repayment),
+            facultyRatio: valueOrNull(facultyRatio),
+            satAverage: valueOrNull(sat),
+            pellRate: rateToPct(pell),
+            admissionRate: rateToPct(admission),
+          };
+        }
+
+        async function autofillColleges() {
+          if (state.mode !== "college") {
+            els.modeMeta.textContent = "Switch to College mode to use public-data autofill.";
+            return;
+          }
+
+          const nameA = safeName(els.nameA.value, "");
+          const nameB = safeName(els.nameB.value, "");
+          if (!nameA || !nameB) {
+            els.modeMeta.textContent = "Enter both college names first.";
+            return;
+          }
+
+          els.modeMeta.textContent = "Fetching public college data...";
+
+          try {
+            const [a, b] = await Promise.all([
+              fetchCollegeScorecardByName(nameA),
+              fetchCollegeScorecardByName(nameB),
+            ]);
+
+            const mappedA = mapCollegeDataToCriteria(a);
+            const mappedB = mapCollegeDataToCriteria(b);
+            let updatedCount = 0;
+
+            Object.keys(mappedA).forEach((key) => {
+              if (mappedA[key] !== null && mappedA[key] !== undefined) {
+                state.scoresA[key] = mappedA[key];
+                updatedCount += 1;
+              }
+            });
+            Object.keys(mappedB).forEach((key) => {
+              if (mappedB[key] !== null && mappedB[key] !== undefined) {
+                state.scoresB[key] = mappedB[key];
+                updatedCount += 1;
+              }
+            });
+
+            renderInputs();
+            renderComparison();
+
+            if (!a && !b) {
+              els.modeMeta.textContent =
+                "No college matches found from College Scorecard. Try more specific school names.";
+              return;
+            }
+
+            els.modeMeta.textContent =
+              "Autofill complete. Updated " +
+              updatedCount +
+              " college metric value(s) from public data; remaining criteria stay user-controlled.";
+          } catch (err) {
+            els.modeMeta.textContent =
+              "Autofill failed. Check API key/network and try again. " + err.message;
+          }
+        }
+
+        function setMode(mode) {
+          state.mode = mode;
+          if (mode === "restaurant") {
+            els.modeRestaurant.classList.add("is-active");
+            els.modeRestaurant.classList.remove("secondary");
+            els.modeCollege.classList.remove("is-active");
+            els.modeCollege.classList.add("secondary");
+            els.modeMeta.textContent =
+              "Restaurant mode compares public signals like ratings, price, distance, and wait time.";
+            els.contextInput.placeholder = "City, neighborhood, or cuisine type";
+            els.locationRow.querySelector("label").textContent = "Location / Cuisine";
+            els.collegeSuggestionsA.innerHTML = "";
+            els.collegeSuggestionsB.innerHTML = "";
+          } else {
+            els.modeCollege.classList.add("is-active");
+            els.modeCollege.classList.remove("secondary");
+            els.modeRestaurant.classList.remove("is-active");
+            els.modeRestaurant.classList.add("secondary");
+            els.modeMeta.textContent =
+              "College mode uses College Scorecard-backed criteria. Start typing a school name to see API-backed suggestions, then set 1-10 weights for a weighted verdict.";
+            els.contextInput.placeholder = "Major, state, or other context";
+            els.locationRow.querySelector("label").textContent = "Student Context";
+          }
+          renderInputs();
+          renderComparison();
+        }
+
+        els.modeRestaurant.addEventListener("click", () => setMode("restaurant"));
+        els.modeCollege.addEventListener("click", () => setMode("college"));
+        const debouncedSuggestA = debounce(() => updateCollegeSuggestions("A"), 280);
+        const debouncedSuggestB = debounce(() => updateCollegeSuggestions("B"), 280);
+        els.nameA.addEventListener("input", () => {
+          renderComparison();
+          debouncedSuggestA();
+        });
+        els.nameB.addEventListener("input", () => {
+          renderComparison();
+          debouncedSuggestB();
+        });
+        els.contextInput.addEventListener("input", renderComparison);
+        els.autofillCollege.addEventListener("click", (e) => {
+          e.preventDefault();
+          autofillColleges();
+        });
+        els.autofillPolls.addEventListener("click", (e) => {
+          e.preventDefault();
+          applyPollAverages();
+        });
+        els.savePollA.addEventListener("click", (e) => {
+          e.preventDefault();
+          savePollForChoice("A");
+        });
+        els.savePollB.addEventListener("click", (e) => {
+          e.preventDefault();
+          savePollForChoice("B");
+        });
+        els.clearPolls.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem(POLL_KEY);
+          renderPollCount();
+          els.modeMeta.textContent = "Cleared all saved poll data.";
+        });
+
+        setMode("restaurant");
+        els.nameA.value = "Option A";
+        els.nameB.value = "Option B";
+        renderComparison();
+      })();
+    </script>
+  </body>
+</html>
