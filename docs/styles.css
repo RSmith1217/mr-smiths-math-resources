@@ -491,7 +491,8 @@ a:focus-visible {
 }
 
 .tool-grid input,
-.tool-grid textarea {
+.tool-grid textarea,
+.tool-grid select {
   width: 100%;
   border: 1px solid #d7bec2;
   border-radius: 10px;
@@ -502,7 +503,8 @@ a:focus-visible {
 }
 
 .tool-grid input:focus-visible,
-.tool-grid textarea:focus-visible {
+.tool-grid textarea:focus-visible,
+.tool-grid select:focus-visible {
   outline: 2px solid rgba(122, 0, 0, 0.18);
   border-color: var(--accent);
 }
