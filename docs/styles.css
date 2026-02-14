@@ -223,21 +223,6 @@ h2 {
   letter-spacing: 0.05em;
 }
 
-.youtube-tag {
-  display: table;
-  margin: 0.55rem auto 0.15rem;
-  text-transform: none;
-  letter-spacing: normal;
-}
-
-.youtube-note {
-  margin: 0 0 0.55rem;
-  text-align: center;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
 .card-description {
   margin: 0.55rem 0 1rem;
   color: var(--text-secondary);
