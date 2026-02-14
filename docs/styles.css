@@ -122,12 +122,12 @@ h1 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
-  gap: 0.6rem;
+  gap: 0.72rem;
   position: sticky;
   top: 0.5rem;
   z-index: 15;
   width: 100%;
-  padding: 0.45rem;
+  padding: 0.62rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: rgba(253, 250, 250, 0.88);
@@ -152,11 +152,11 @@ h1 {
   justify-content: center;
   border: 1px solid #d7bec2;
   border-radius: 999px;
-  min-height: 2.15rem;
-  padding: 0.32rem 0.55rem;
-  font-size: 0.82rem;
+  min-height: 2.35rem;
+  padding: 0.4rem 0.68rem;
+  font-size: 0.79rem;
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.2;
   background: #fff9f9;
   color: var(--maroon-700);
   text-align: center;
@@ -822,6 +822,8 @@ a:focus-visible {
     top: auto;
     width: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    padding: 0.5rem;
   }
 
   .class-card {
