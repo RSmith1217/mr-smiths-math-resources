@@ -63,20 +63,26 @@ body {
   margin: 0 auto;
 }
 
+.home-header-inner {
+  position: relative;
+}
+
 .home-logo-link {
+  position: absolute;
+  top: 0.45rem;
+  right: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 0;
   flex-shrink: 0;
+  z-index: 2;
 }
 
 .home-title-row {
   margin: 0.4rem 0 0.6rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.7rem;
+  align-items: flex-start;
 }
 
 .home-title-row h1 {
@@ -84,7 +90,7 @@ body {
 }
 
 .home-logo {
-  width: 100px;
+  width: 128px;
   height: auto;
   opacity: 0.78;
 }
@@ -800,7 +806,7 @@ a:focus-visible {
   }
 
   .home-logo {
-    width: 100px;
+    width: 96px;
   }
 
   .top-links {
