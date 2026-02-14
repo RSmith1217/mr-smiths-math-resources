@@ -63,22 +63,30 @@ body {
   margin: 0 auto;
 }
 
-.home-header-inner {
-  position: relative;
-  padding-right: 96px;
+.home-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  flex-shrink: 0;
+}
+
+.home-title-row {
+  margin: 0.4rem 0 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.home-title-row h1 {
+  margin: 0;
 }
 
 .home-logo {
-  position: absolute;
-  top: 0.1rem;
-  right: 0;
-  width: 72px;
+  width: 38px;
   height: auto;
   opacity: 0.78;
-}
-
-.home-logo-link {
-  border: 0;
 }
 
 .eyebrow {
@@ -791,14 +799,8 @@ a:focus-visible {
     padding-top: 3.2rem;
   }
 
-  .home-header-inner {
-    padding-right: 0;
-  }
-
   .home-logo {
-    width: 52px;
-    top: -0.2rem;
-    right: 0.1rem;
+    width: 30px;
   }
 
   .top-links {
