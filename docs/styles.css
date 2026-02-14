@@ -751,7 +751,8 @@ a:focus-visible {
   }
 
   .top-links {
-    top: 0.35rem;
+    position: static;
+    top: auto;
     width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
