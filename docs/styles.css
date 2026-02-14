@@ -120,7 +120,7 @@ h1 {
 .top-links {
   margin-top: 0.9rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
   gap: 0.6rem;
   position: sticky;
@@ -821,7 +821,7 @@ a:focus-visible {
     position: static;
     top: auto;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .class-card {
