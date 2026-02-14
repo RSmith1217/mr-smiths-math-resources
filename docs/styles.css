@@ -102,6 +102,17 @@ h1 {
   backdrop-filter: blur(5px);
 }
 
+.home-banner {
+  margin: 0.75rem 0 0;
+  border: 1px solid #d7bec2;
+  border-radius: var(--radius-md);
+  background: #fff9f9;
+  color: var(--maroon-700);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .quick-link {
   display: flex;
   align-items: center;
