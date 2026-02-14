@@ -50,7 +50,6 @@ jobs:
             --retry-wait-time 3
             --accept 200..=299,403,429
             --user-agent "Mozilla/5.0 (compatible; LinkChecker/1.0)"
-            --exclude-mail
             docs/**/*.html
           format: markdown
           output: lychee/out.md
