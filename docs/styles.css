@@ -63,6 +63,38 @@ body {
   margin: 0 auto;
 }
 
+.home-header-inner {
+  position: relative;
+}
+
+.home-logo-link {
+  position: absolute;
+  top: 0.45rem;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.home-title-row {
+  margin: 0.4rem 0 0.6rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.home-title-row h1 {
+  margin: 0;
+}
+
+.home-logo {
+  width: 128px;
+  height: auto;
+  opacity: 0.78;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--maroon-700);
@@ -771,6 +803,10 @@ a:focus-visible {
 @media (max-width: 640px) {
   .site-header {
     padding-top: 3.2rem;
+  }
+
+  .home-logo {
+    width: 96px;
   }
 
   .top-links {
