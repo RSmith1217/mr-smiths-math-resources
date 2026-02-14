@@ -63,6 +63,20 @@ body {
   margin: 0 auto;
 }
 
+.home-header-inner {
+  position: relative;
+  padding-right: 96px;
+}
+
+.home-logo {
+  position: absolute;
+  top: 0.1rem;
+  right: 0;
+  width: 72px;
+  height: auto;
+  opacity: 0.78;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--maroon-700);
@@ -771,6 +785,16 @@ a:focus-visible {
 @media (max-width: 640px) {
   .site-header {
     padding-top: 3.2rem;
+  }
+
+  .home-header-inner {
+    padding-right: 0;
+  }
+
+  .home-logo {
+    width: 52px;
+    top: -0.2rem;
+    right: 0.1rem;
   }
 
   .top-links {
