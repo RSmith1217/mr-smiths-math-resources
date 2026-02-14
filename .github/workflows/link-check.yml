@@ -2,10 +2,22 @@ name: Link Check
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**/*.html"
+      - "docs/robots.txt"
+      - "docs/sitemap.xml"
+      - ".github/workflows/link-check.yml"
   pull_request:
     paths:
       - "docs/**/*.html"
+      - "docs/robots.txt"
+      - "docs/sitemap.xml"
       - ".github/workflows/link-check.yml"
+  schedule:
+    - cron: "0 13 * * 1"
 
 jobs:
   check-links:
@@ -22,6 +34,7 @@ jobs:
             --no-progress
             --max-retries 2
             --retry-wait-time 3
+            --exclude-mail
             docs/**/*.html
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
