@@ -514,6 +514,10 @@ a:focus-visible {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
+.ai-brochure-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .about-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -830,6 +834,10 @@ a:focus-visible {
   }
 
   .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-brochure-grid {
     grid-template-columns: 1fr;
   }
 
