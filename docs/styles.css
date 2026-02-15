@@ -69,7 +69,7 @@ body {
 
 .home-social-stack {
   position: absolute;
-  top: -1.55rem;
+  top: -0.95rem;
   bottom: auto;
   right: 0;
   display: inline-flex;
@@ -823,7 +823,7 @@ a:focus-visible {
   }
 
   .home-social-stack {
-    top: -1.2rem;
+    top: -0.75rem;
     bottom: auto;
     gap: 0.36rem;
   }
