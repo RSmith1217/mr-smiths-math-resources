@@ -159,6 +159,10 @@ h1 {
   text-align: center;
 }
 
+.home-landing-header .home-social-stack {
+  bottom: 12.6rem;
+}
+
 .quick-link {
   display: flex;
   align-items: center;
@@ -836,6 +840,10 @@ a:focus-visible {
   .home-social-icon[src*="YouTube"] {
     width: 64px;
     height: 45px;
+  }
+
+  .home-landing-header .home-social-stack {
+    bottom: 13.2rem;
   }
 
   .top-links {
