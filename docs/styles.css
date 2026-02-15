@@ -67,15 +67,15 @@ body {
   position: relative;
 }
 
-.home-logo-link {
+.home-social-stack {
   position: absolute;
   top: -1.7rem;
   right: 0;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 0;
-  flex-shrink: 0;
+  gap: 0.38rem;
   z-index: 2;
 }
 
@@ -89,10 +89,16 @@ body {
   margin: 0;
 }
 
-.home-logo {
-  width: 138px;
+.home-social-link {
+  border: 0;
+  line-height: 0;
+}
+
+.home-social-icon {
+  width: 52px;
   height: auto;
-  opacity: 0.78;
+  display: block;
+  opacity: 0.94;
 }
 
 .eyebrow {
@@ -809,12 +815,13 @@ a:focus-visible {
     padding-top: 3.2rem;
   }
 
-  .home-logo {
-    width: 110px;
+  .home-social-stack {
+    top: -1.2rem;
+    gap: 0.3rem;
   }
 
-  .home-logo-link {
-    top: -1.2rem;
+  .home-social-icon {
+    width: 44px;
   }
 
   .top-links {
