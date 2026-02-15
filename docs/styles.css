@@ -160,7 +160,7 @@ h1 {
 }
 
 .home-landing-header .home-social-stack {
-  bottom: 12.0rem;
+  bottom: calc(12.0rem - 2px);
 }
 
 .quick-link {
@@ -843,7 +843,7 @@ a:focus-visible {
   }
 
   .home-landing-header .home-social-stack {
-    bottom: 12.6rem;
+    bottom: calc(12.6rem - 2px);
   }
 
   .top-links {
