@@ -101,6 +101,11 @@ body {
   opacity: 0.94;
 }
 
+.home-social-icon[src*="YouTube"] {
+  width: 64px;
+  height: 45px;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--maroon-700);
@@ -823,6 +828,11 @@ a:focus-visible {
   .home-social-icon {
     width: 64px;
     height: 64px;
+  }
+
+  .home-social-icon[src*="YouTube"] {
+    width: 64px;
+    height: 45px;
   }
 
   .top-links {
