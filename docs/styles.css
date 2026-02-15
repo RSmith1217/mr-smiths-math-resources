@@ -69,8 +69,8 @@ body {
 
 .home-social-stack {
   position: absolute;
-  top: auto;
-  bottom: 8.4rem;
+  top: -1.55rem;
+  bottom: auto;
   right: 0;
   display: inline-flex;
   flex-direction: row;
@@ -157,10 +157,6 @@ h1 {
   font-size: 0.9rem;
   font-weight: 600;
   text-align: center;
-}
-
-.home-landing-header .home-social-stack {
-  bottom: calc(12.0rem - 4px);
 }
 
 .quick-link {
@@ -827,8 +823,8 @@ a:focus-visible {
   }
 
   .home-social-stack {
-    top: auto;
-    bottom: 9.2rem;
+    top: -1.2rem;
+    bottom: auto;
     gap: 0.36rem;
   }
 
@@ -840,10 +836,6 @@ a:focus-visible {
   .home-social-icon[src*="YouTube"] {
     width: 64px;
     height: 45px;
-  }
-
-  .home-landing-header .home-social-stack {
-    bottom: calc(12.6rem - 4px);
   }
 
   .top-links {
