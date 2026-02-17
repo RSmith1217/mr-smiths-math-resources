@@ -56,7 +56,7 @@ body {
 }
 
 .site-header {
-  padding: 4.5rem 1.2rem var(--block-gap);
+  padding: 4.5rem 1.2rem 0;
 }
 
 .header-inner {
@@ -133,6 +133,7 @@ h1 {
 
 .top-links {
   margin-top: 0.9rem;
+  margin-bottom: var(--block-gap);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
