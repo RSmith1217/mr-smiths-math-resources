@@ -58,6 +58,10 @@ body {
   padding: 4.5rem 1.2rem 2rem;
 }
 
+.home-site-header {
+  padding-bottom: 0.75rem;
+}
+
 .header-inner {
   max-width: 960px;
   margin: 0 auto;
