@@ -13,6 +13,7 @@
   --shadow: 0 12px 30px rgba(76, 21, 31, 0.08);
   --radius-lg: 18px;
   --radius-md: 12px;
+  --block-gap: 1rem;
 }
 
 * {
@@ -177,7 +178,7 @@ h1 {
 
 .tool-shortcuts {
   max-width: 960px;
-  margin: 0 auto 1rem;
+  margin: 0 auto var(--block-gap);
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -229,7 +230,7 @@ h1 {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
+  gap: var(--block-gap);
 }
 
 .explore-tile .embed-slot {
@@ -240,7 +241,7 @@ h1 {
   max-width: 960px;
   margin: 0 auto;
   display: grid;
-  gap: 1rem;
+  gap: var(--block-gap);
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
@@ -284,8 +285,8 @@ h2 {
 }
 
 .resource-block + .resource-block {
-  margin-top: 0.9rem;
-  padding-top: 0.9rem;
+  margin-top: var(--block-gap);
+  padding-top: var(--block-gap);
   border-top: 1px solid var(--line);
 }
 
@@ -314,7 +315,7 @@ h3 {
   padding-left: 0;
   list-style: none;
   display: grid;
-  gap: 0.8rem;
+  gap: var(--block-gap);
 }
 
 .lesson-item {
@@ -519,7 +520,7 @@ a:focus-visible {
   max-width: 960px;
   margin: 0 auto;
   display: grid;
-  gap: 1rem;
+  gap: var(--block-gap);
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
