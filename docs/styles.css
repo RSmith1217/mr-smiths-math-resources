@@ -56,11 +56,7 @@ body {
 }
 
 .site-header {
-  padding: 4.5rem 1.2rem 2rem;
-}
-
-.home-site-header {
-  padding-bottom: 0.75rem;
+  padding: 4.5rem 1.2rem var(--block-gap);
 }
 
 .header-inner {
