@@ -257,6 +257,20 @@ h1 {
   gap: 0.6rem;
 }
 
+.card-open-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d7bec2;
+  border-radius: 999px;
+  padding: 0.18rem 0.62rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: #fff9f9;
+  color: var(--maroon-700);
+  white-space: nowrap;
+}
+
 h2 {
   margin: 0;
   font-size: 1.18rem;
@@ -493,6 +507,8 @@ a:focus-visible {
 .quick-link:hover,
 .quick-link:focus-visible,
 .quick-link[aria-current="page"],
+.card-open-link:hover,
+.card-open-link:focus-visible,
 .lesson-links a:hover,
 .lesson-links a:focus-visible {
   background: var(--accent-soft);
