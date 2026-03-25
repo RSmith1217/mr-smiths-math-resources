@@ -381,6 +381,28 @@ h3 {
   gap: 0.45rem;
 }
 
+.page-footer-nav {
+  max-width: 960px;
+  margin: 1.35rem auto 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.page-footer-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #decdd0;
+  border-radius: 999px;
+  padding: 0.22rem 0.68rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: rgba(255, 249, 249, 0.72);
+  color: var(--text-secondary);
+}
+
 .assessment-box {
   margin-top: 0.75rem;
   border: 1px solid var(--line);
@@ -884,6 +906,14 @@ a:focus-visible {
 
   .tool-grid {
     grid-template-columns: 1fr;
+  }
+
+  .page-footer-nav {
+    justify-content: stretch;
+  }
+
+  .page-footer-nav a {
+    flex: 1 1 160px;
   }
 
 }
