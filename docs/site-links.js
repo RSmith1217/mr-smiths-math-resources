@@ -7,11 +7,20 @@
     }
 
     const normalizedHref = href.trim().toLowerCase();
-    return !(
+    if (
       normalizedHref.startsWith("mailto:") ||
       normalizedHref.startsWith("tel:") ||
       normalizedHref.startsWith("javascript:")
-    );
+    ) {
+      return false;
+    }
+
+    if (normalizedHref.endsWith(".pdf")) {
+      return true;
+    }
+
+    // Google Drive file links are the site's primary PDF/document handout links.
+    return normalizedHref.includes("drive.google.com/file/");
   };
 
   const applyNewTabBehavior = () => {
