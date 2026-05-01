@@ -381,6 +381,38 @@ h3 {
   gap: 0.45rem;
 }
 
+.inline-lesson-links-page .lesson-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 46%);
+  align-items: start;
+  column-gap: 0.75rem;
+  row-gap: 0.35rem;
+}
+
+.inline-lesson-links-page .lesson-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.inline-lesson-links-page .lesson-summary {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 0;
+}
+
+.inline-lesson-links-page .lesson-links {
+  grid-column: 2;
+  grid-row: 1;
+  justify-content: flex-end;
+  margin-top: 0;
+  min-width: 0;
+}
+
+.inline-lesson-links-page .lesson-links a {
+  padding: 0.16rem 0.52rem;
+  font-size: 0.74rem;
+}
+
 .page-footer-nav {
   max-width: 960px;
   margin: 1.35rem auto 0;
@@ -885,6 +917,19 @@ a:focus-visible {
 
   .class-card {
     padding: 1rem;
+  }
+
+  .inline-lesson-links-page .lesson-item {
+    display: block;
+  }
+
+  .inline-lesson-links-page .lesson-summary {
+    margin-top: 0.3rem;
+  }
+
+  .inline-lesson-links-page .lesson-links {
+    justify-content: flex-start;
+    margin-top: 0.55rem;
   }
 
   .announcement-bar {
