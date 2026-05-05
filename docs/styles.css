@@ -563,10 +563,10 @@ h3 {
 }
 
 .announcement-bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 24rem);
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: clamp(1.5rem, 5vw, 5rem);
 }
 
 .announcement-bar .card-description {
@@ -574,7 +574,10 @@ h3 {
 }
 
 .announcement-bar .lesson-links {
-  min-width: 220px;
+  width: 100%;
+  min-width: 0;
+  max-width: 22rem;
+  justify-self: end;
 }
 
 .announcement-bar .lesson-links a {
@@ -1002,8 +1005,13 @@ a:focus-visible {
   }
 
   .announcement-bar {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     align-items: flex-start;
+  }
+
+  .announcement-bar .lesson-links {
+    max-width: none;
+    justify-self: stretch;
   }
 
   .about-grid {
