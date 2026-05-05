@@ -150,7 +150,8 @@ h1 {
 }
 
 .year-menu {
-  margin-top: 0.9rem;
+  margin-top: -0.35rem;
+  margin-bottom: var(--block-gap);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
