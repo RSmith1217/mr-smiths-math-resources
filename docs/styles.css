@@ -179,7 +179,11 @@ h1 {
   gap: 0.55rem;
 }
 
+.year-menu-buttons a,
 .year-menu-buttons button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #d7bec2;
   border-radius: 8px;
   min-height: 2.25rem;
@@ -191,6 +195,9 @@ h1 {
   color: var(--maroon-700);
   text-align: center;
   background: #fff9f9;
+}
+
+.year-menu-buttons button {
   opacity: 1;
   cursor: default;
 }
@@ -628,6 +635,9 @@ a:focus-visible {
 .quick-link:hover,
 .quick-link:focus-visible,
 .quick-link[aria-current="page"],
+.year-menu-buttons a:hover,
+.year-menu-buttons a:focus-visible,
+.year-menu-buttons a[aria-current="page"],
 .card-open-link:hover,
 .card-open-link:focus-visible,
 .lesson-links a:hover,
