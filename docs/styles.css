@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap");
+
 :root {
   --bg: #f8f4f4;
   --surface: #ffffff;
@@ -468,6 +470,111 @@ h3 {
 
 .lesson-links a:last-child:nth-child(odd) {
   grid-column: 1 / -1;
+}
+
+.lesson-card-numbered {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(5.4rem, 10%) minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  overflow: hidden;
+  min-height: 7rem;
+  padding: 0;
+  border-color: #e3ccd1;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #fffafa 100%);
+  box-shadow: 0 10px 22px rgba(76, 21, 31, 0.055);
+}
+
+.lesson-card-numbered::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.lesson-number-panel {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.08rem;
+  min-width: 0;
+  padding: 0.82rem 0.48rem;
+  border-right: 1px solid #e6d3d6;
+  font-family: "Inter", "Manrope", sans-serif;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.76), transparent 38%),
+    linear-gradient(160deg, #f7eef0 0%, #ead7dc 100%);
+}
+
+.lesson-number-label {
+  color: var(--maroon-700);
+  font-size: clamp(0.68rem, 1.25vw, 0.86rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lesson-number-value {
+  color: var(--maroon-900);
+  font-size: clamp(2.25rem, 5.25vw, 3.41rem);
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  line-height: 0.9;
+  text-shadow:
+    0 1px 0 #ffffff,
+    0 7px 16px rgba(76, 21, 31, 0.13);
+}
+
+.lesson-card-numbered .lesson-title,
+.lesson-card-numbered .lesson-summary,
+.lesson-card-numbered .lesson-links {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.lesson-card-numbered .lesson-title {
+  grid-row: 1;
+  align-self: end;
+  padding: 0.82rem 1rem 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.lesson-card-numbered .lesson-summary {
+  grid-row: 2;
+  padding: 0.24rem 1rem 0;
+  margin-top: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.lesson-card-numbered .lesson-links {
+  grid-row: 3;
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+  max-width: none;
+  padding: 0.72rem 1rem 0.9rem;
+  margin: 0;
+}
+
+.lesson-card-numbered .lesson-links a,
+.lesson-card-numbered .lesson-links .pending-link {
+  min-height: 1.8rem;
+  border-radius: 8px;
+  padding: 0.25rem 0.58rem;
+  font-size: 0.73rem;
+}
+
+.lesson-card-numbered .lesson-links a:last-child:nth-child(odd) {
+  grid-column: auto;
 }
 
 .page-footer-nav {
@@ -1011,12 +1118,40 @@ a:focus-visible {
     display: block;
   }
 
+  .lesson-card-numbered {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .lesson-number-value {
+    font-size: 2.02rem;
+  }
+
   .lesson-item .lesson-summary {
     margin-top: 0.3rem;
   }
 
+  .lesson-card-numbered .lesson-summary {
+    margin-top: 0;
+  }
+
   .lesson-item .lesson-links {
     margin-top: 0.55rem;
+  }
+
+  .lesson-card-numbered .lesson-links {
+    margin-top: 0;
+  }
+
+  .lesson-card-numbered .lesson-title {
+    padding-right: 0.8rem;
+    font-size: 0.94rem;
+  }
+
+  .lesson-card-numbered .lesson-summary,
+  .lesson-card-numbered .lesson-links {
+    padding-right: 0.8rem;
   }
 
   .announcement-bar {
