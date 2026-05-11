@@ -41,7 +41,7 @@
     }
 
     if (/review/i.test(text)) {
-      return { label: "Review", number: "R", title: text };
+      return { label: "Review", number: "", title: text };
     }
 
     return null;
