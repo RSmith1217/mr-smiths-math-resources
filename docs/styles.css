@@ -515,10 +515,12 @@ h3 {
   grid-row: 1 / 4;
   z-index: 1;
   display: grid;
+  align-self: stretch;
   align-content: center;
   justify-items: center;
   gap: 0.08rem;
   min-width: 0;
+  min-height: 100%;
   padding: 0.82rem 0.48rem;
   font-family: "Inter", "Manrope", sans-serif;
 }
