@@ -473,9 +473,10 @@ h3 {
 }
 
 .lesson-card-numbered {
+  --lesson-rail-width: clamp(5.4rem, 10%, 7rem);
   position: relative;
   display: grid;
-  grid-template-columns: minmax(5.4rem, 10%) minmax(0, 1fr);
+  grid-template-columns: var(--lesson-rail-width) minmax(0, 1fr);
   grid-template-rows: auto auto auto;
   gap: 0;
   overflow: hidden;
@@ -491,24 +492,35 @@ h3 {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+.lesson-card-numbered::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 0;
+  width: var(--lesson-rail-width);
+  border-right: 1px solid #e6d3d6;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.76), transparent 38%),
+    linear-gradient(160deg, #f7eef0 0%, #ead7dc 100%);
+}
+
 .lesson-number-panel {
+  position: relative;
   grid-column: 1;
   grid-row: 1 / 4;
+  z-index: 1;
   display: grid;
   align-content: center;
   justify-items: center;
   gap: 0.08rem;
   min-width: 0;
   padding: 0.82rem 0.48rem;
-  border-right: 1px solid #e6d3d6;
   font-family: "Inter", "Manrope", sans-serif;
-  background:
-    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.76), transparent 38%),
-    linear-gradient(160deg, #f7eef0 0%, #ead7dc 100%);
 }
 
 .lesson-number-panel-compact {
@@ -1127,8 +1139,9 @@ a:focus-visible {
   }
 
   .lesson-card-numbered {
+    --lesson-rail-width: 4.5rem;
     display: grid;
-    grid-template-columns: 4.5rem minmax(0, 1fr);
+    grid-template-columns: var(--lesson-rail-width) minmax(0, 1fr);
     min-height: 0;
   }
 
