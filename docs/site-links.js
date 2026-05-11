@@ -3,7 +3,7 @@
     { pattern: /^Lesson\s+(\d+):\s*(.+)$/i, label: "Lesson" },
     { pattern: /^Unit\s+\d+,\s*Lesson\s+(\d+):\s*(.+)$/i, label: "Lesson" },
     { pattern: /^Unit\s+\d+,\s*Lesson\s+(\d+)\s+-\s*(.+)$/i, label: "Lesson" },
-    { pattern: /^Desmos Applet\s+#?(\d+):\s*(.+)$/i, label: "Applet" }
+    { pattern: /^Desmos Applet\s+#?\d+:\s*(.+)$/i, label: "Applet", numberless: true }
   ];
 
   const shouldOpenInNewTab = (link) => {
@@ -31,10 +31,12 @@
   };
 
   const parseLessonTitle = (text) => {
-    for (const { pattern, label } of titlePatterns) {
+    for (const { pattern, label, numberless } of titlePatterns) {
       const match = text.match(pattern);
       if (match) {
-        return { label, number: match[1], title: match[2] };
+        return numberless
+          ? { label, number: "", title: match[1] }
+          : { label, number: match[1], title: match[2] };
       }
     }
 
@@ -61,13 +63,18 @@
       label.className = "lesson-number-label";
       label.textContent = parsed.label;
 
-      const number = document.createElement("span");
-      number.className = "lesson-number-value";
-      number.textContent = parsed.number;
-
       const panel = document.createElement("div");
       panel.className = "lesson-number-panel";
-      panel.append(label, number);
+      panel.append(label);
+
+      if (parsed.number) {
+        const number = document.createElement("span");
+        number.className = "lesson-number-value";
+        number.textContent = parsed.number;
+        panel.append(number);
+      } else {
+        panel.classList.add("lesson-number-panel-compact");
+      }
 
       item.classList.add("lesson-card-numbered");
       title.textContent = parsed.title;

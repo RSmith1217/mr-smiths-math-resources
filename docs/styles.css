@@ -511,6 +511,14 @@ h3 {
     linear-gradient(160deg, #f7eef0 0%, #ead7dc 100%);
 }
 
+.lesson-number-panel-compact {
+  align-content: center;
+}
+
+.lesson-number-panel-compact .lesson-number-label {
+  font-size: clamp(0.76rem, 1.35vw, 0.95rem);
+}
+
 .lesson-number-label {
   color: var(--maroon-700);
   font-size: clamp(0.68rem, 1.25vw, 0.86rem);
