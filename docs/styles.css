@@ -99,16 +99,16 @@ body {
 }
 
 .home-social-icon {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   display: block;
   opacity: 0.94;
 }
 
 .home-social-icon[src*="YouTube"] {
-  width: 64px;
-  height: 45px;
-  margin-bottom: 10px;
+  width: 48px;
+  height: 34px;
+  margin-bottom: 7px;
 }
 
 .eyebrow {
@@ -1119,13 +1119,13 @@ a:focus-visible {
   }
 
   .home-social-icon {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
   }
 
   .home-social-icon[src*="YouTube"] {
-    width: 64px;
-    height: 45px;
+    width: 48px;
+    height: 34px;
   }
 
   .home-landing-header .home-social-stack {
