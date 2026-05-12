@@ -356,6 +356,13 @@ h2 {
   border-top: 1px solid var(--line);
 }
 
+.course-start-block {
+  border: 1px solid #d7b9bf;
+  border-radius: var(--radius-md);
+  background: #fffafa;
+  padding: 0.85rem;
+}
+
 h3 {
   margin: 0 0 0.45rem;
   font-size: 0.95rem;
