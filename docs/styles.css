@@ -213,11 +213,11 @@ h1 {
   align-items: center;
   justify-content: center;
   border: 1px solid #d7bec2;
-  border-radius: 999px;
-  min-height: 2.35rem;
-  padding: 0.4rem 0.68rem;
+  border-radius: 8px;
+  min-height: 2.25rem;
+  padding: 0.38rem 0.62rem;
   font-size: 0.79rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
   background: #fff9f9;
   color: var(--maroon-700);
