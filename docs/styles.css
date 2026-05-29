@@ -861,6 +861,32 @@ a:focus-visible {
   grid-column: 1 / -1;
 }
 
+.puzzle-feature {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(280px, 1.28fr);
+  gap: 1rem;
+  align-items: center;
+}
+
+.puzzle-copy .tag {
+  display: inline-flex;
+  margin-bottom: 0.65rem;
+}
+
+.puzzle-media {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fff;
+}
+
+.puzzle-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .credit-line {
   margin: 0.65rem 0 0;
   color: var(--text-secondary);
@@ -1244,6 +1270,10 @@ a:focus-visible {
   }
 
   .ai-brochure-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .puzzle-feature {
     grid-template-columns: 1fr;
   }
 
