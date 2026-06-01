@@ -98,68 +98,9 @@
     });
   };
 
-  const applyCollapsibleUnits = () => {
-    document.querySelectorAll(".unit-heading").forEach((heading, index) => {
-      const lessonList = heading.nextElementSibling;
-      if (!lessonList || !lessonList.classList.contains("lesson-list") || heading.querySelector(".unit-toggle")) {
-        return;
-      }
-
-      const listId = lessonList.id || `${heading.id || `unit-${index + 1}`}-lessons`;
-      lessonList.id = listId;
-
-      const label = heading.textContent.trim();
-      heading.textContent = "";
-      heading.classList.add("unit-heading-collapsible");
-
-      const button = document.createElement("button");
-      button.className = "unit-toggle";
-      button.type = "button";
-      button.setAttribute("aria-expanded", "true");
-      button.setAttribute("aria-controls", listId);
-
-      const labelText = document.createElement("span");
-      labelText.className = "unit-toggle-label";
-      labelText.textContent = label;
-
-      const icon = document.createElement("span");
-      icon.className = "unit-toggle-icon";
-      icon.setAttribute("aria-hidden", "true");
-      icon.textContent = "^";
-
-      button.append(labelText, icon);
-      button.addEventListener("click", () => {
-        const isExpanded = button.getAttribute("aria-expanded") === "true";
-        button.setAttribute("aria-expanded", String(!isExpanded));
-        lessonList.hidden = isExpanded;
-      });
-
-      heading.append(button);
-    });
-  };
-
-  const expandLinkedUnit = () => {
-    const id = window.location.hash.slice(1);
-    if (!id) {
-      return;
-    }
-
-    const heading = document.getElementById(id);
-    const button = heading?.querySelector(".unit-toggle");
-    const lessonList = heading?.nextElementSibling;
-    if (!button || !lessonList?.classList.contains("lesson-list")) {
-      return;
-    }
-
-    button.setAttribute("aria-expanded", "true");
-    lessonList.hidden = false;
-  };
-
   const enhancePage = () => {
     applyLessonNumberCards();
-    applyCollapsibleUnits();
     applyNewTabBehavior();
-    expandLinkedUnit();
   };
 
   if (document.readyState === "loading") {
@@ -168,5 +109,4 @@
     enhancePage();
   }
 
-  window.addEventListener("hashchange", expandLinkedUnit);
 })();

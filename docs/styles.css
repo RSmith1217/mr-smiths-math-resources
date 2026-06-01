@@ -377,51 +377,6 @@ h3 {
   letter-spacing: 0.04em;
 }
 
-.unit-heading-collapsible {
-  margin-bottom: 0.5rem;
-}
-
-.unit-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 0.55rem 0.7rem;
-  background: #fffafa;
-  color: var(--maroon-700);
-  font: inherit;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-align: left;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.unit-toggle:hover,
-.unit-toggle:focus-visible {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.unit-toggle-label {
-  min-width: 0;
-}
-
-.unit-toggle-icon {
-  flex: 0 0 auto;
-  font-size: 0.9rem;
-  line-height: 1;
-  transition: transform 160ms ease;
-}
-
-.unit-toggle[aria-expanded="false"] .unit-toggle-icon {
-  transform: rotate(180deg);
-}
-
 .course-note {
   margin: 0.85rem 0 0;
   font-size: 0.86rem;
