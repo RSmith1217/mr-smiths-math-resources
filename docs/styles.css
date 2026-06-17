@@ -215,6 +215,25 @@ h1 {
   text-align: center;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .nav-menu:not([open]):hover > .nav-menu-panel {
+    display: grid;
+  }
+
+  .nav-menu:hover > .nav-menu-summary::after {
+    transform: translateY(0.12rem) rotate(225deg);
+  }
+
+  .nav-menu-panel::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 0.45rem;
+  }
+}
+
 .year-menu {
   margin-top: -0.35rem;
   margin-bottom: var(--block-gap);

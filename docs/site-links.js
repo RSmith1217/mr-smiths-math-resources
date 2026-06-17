@@ -98,9 +98,48 @@
     });
   };
 
+  const applyDesktopHoverMenus = () => {
+    const hoverQuery = window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (min-width: 641px)"
+    );
+
+    document.querySelectorAll(".nav-menu").forEach((menu) => {
+      const summary = menu.querySelector(".nav-menu-summary");
+      let openedByHover = false;
+
+      menu.addEventListener("mouseenter", () => {
+        if (!hoverQuery.matches || menu.open) {
+          return;
+        }
+
+        menu.open = true;
+        openedByHover = true;
+      });
+
+      menu.addEventListener("mouseleave", () => {
+        if (!openedByHover) {
+          return;
+        }
+
+        menu.open = false;
+        openedByHover = false;
+      });
+
+      summary?.addEventListener("click", (event) => {
+        if (!openedByHover) {
+          return;
+        }
+
+        event.preventDefault();
+        openedByHover = false;
+      });
+    });
+  };
+
   const enhancePage = () => {
     applyLessonNumberCards();
     applyNewTabBehavior();
+    applyDesktopHoverMenus();
   };
 
   if (document.readyState === "loading") {
