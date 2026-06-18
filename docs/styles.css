@@ -11,12 +11,6 @@
   --maroon-500: #5d2230;
   --accent: #7a0000;
   --accent-soft: #f6e7e7;
-  --resource: #255f78;
-  --resource-soft: #e9f3f6;
-  --deadline: #815a10;
-  --deadline-soft: #fbf0d4;
-  --video: #7a2342;
-  --video-soft: #f7e7ee;
   --line: #e3dada;
   --shadow: 0 12px 28px rgba(52, 42, 43, 0.08);
   --radius-lg: 18px;
@@ -426,24 +420,6 @@ h2 {
   letter-spacing: 0.05em;
 }
 
-.tag.resource {
-  border-color: #b8d3dc;
-  color: var(--resource);
-  background: var(--resource-soft);
-}
-
-.tag.deadline {
-  border-color: #e4ca87;
-  color: var(--deadline);
-  background: var(--deadline-soft);
-}
-
-.tag.video {
-  border-color: #ddb8c7;
-  color: var(--video);
-  background: var(--video-soft);
-}
-
 .card-description {
   margin: 0.55rem 0 1rem;
   color: var(--text-secondary);
@@ -812,31 +788,12 @@ h3 {
 }
 
 .announcement-bar {
-  --announcement-accent: var(--maroon-500);
+  --announcement-accent: var(--maroon-700);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(14rem, 24rem);
   align-items: center;
   gap: clamp(1.5rem, 5vw, 5rem);
   border-left: 6px solid var(--announcement-accent);
-}
-
-.announcement-bar.resource {
-  --announcement-accent: var(--resource);
-}
-
-.announcement-bar.video {
-  --announcement-accent: var(--video);
-}
-
-.announcement-bar.deadline {
-  --announcement-accent: var(--deadline);
-}
-
-.announcement-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .announcement-bar .card-description {
