@@ -136,10 +136,46 @@
     });
   };
 
+  const applyCountdowns = () => {
+    document.querySelectorAll("[data-countdown]").forEach((countdown) => {
+      const targetValue = countdown.getAttribute("data-countdown-target");
+      const daysElement = countdown.querySelector("[data-countdown-days]");
+      if (!targetValue || !daysElement) {
+        return;
+      }
+
+      const target = new Date(targetValue);
+      if (Number.isNaN(target.getTime())) {
+        return;
+      }
+
+      const updateCountdown = () => {
+        const today = new Date();
+        const startOfToday = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        );
+        const startOfTarget = new Date(
+          target.getFullYear(),
+          target.getMonth(),
+          target.getDate()
+        );
+        const daysRemaining = Math.ceil((startOfTarget - startOfToday) / 86400000);
+
+        daysElement.textContent = daysRemaining > 0 ? String(daysRemaining) : "Today";
+      };
+
+      updateCountdown();
+      window.setInterval(updateCountdown, 60000);
+    });
+  };
+
   const enhancePage = () => {
     applyLessonNumberCards();
     applyNewTabBehavior();
     applyDesktopHoverMenus();
+    applyCountdowns();
   };
 
   if (document.readyState === "loading") {

@@ -440,6 +440,65 @@ h2 {
   padding: 0.85rem;
 }
 
+.exam-countdown {
+  margin-bottom: var(--block-gap);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, auto);
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #d8c8cb;
+  border-left: 6px solid var(--maroon-700);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, #fffdfd 0%, #fbf7f7 100%);
+  padding: 0.85rem 1rem;
+}
+
+.exam-countdown-label {
+  margin: 0;
+  color: var(--maroon-700);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.exam-countdown h2 {
+  margin-top: 0.16rem;
+}
+
+.exam-countdown-note {
+  margin: 0.28rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.exam-countdown-timer {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  min-width: 7rem;
+  border: 1px solid #decdd0;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.55rem 0.75rem;
+}
+
+.exam-countdown-value {
+  color: var(--maroon-900);
+  font-family: "Inter", "Manrope", sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.exam-countdown-unit {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 h3 {
   margin: 0 0 0.45rem;
   font-size: 0.95rem;
@@ -1269,6 +1328,14 @@ a:focus-visible {
 
   .class-card {
     padding: 1rem;
+  }
+
+  .exam-countdown {
+    grid-template-columns: 1fr;
+  }
+
+  .exam-countdown-timer {
+    justify-self: stretch;
   }
 
   .lesson-item {
