@@ -72,6 +72,9 @@
         const number = document.createElement("span");
         number.className = "lesson-number-value";
         number.textContent = parsed.number;
+        if (/[A-Z]/i.test(parsed.number)) {
+          number.classList.add("lesson-number-value-modified");
+        }
         panel.append(number);
       } else {
         panel.classList.add("lesson-number-panel-compact");

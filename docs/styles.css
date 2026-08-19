@@ -698,6 +698,10 @@ h3 {
     0 7px 16px rgba(76, 21, 31, 0.13);
 }
 
+.lesson-number-value-modified {
+  letter-spacing: -0.02em;
+}
+
 .lesson-card-numbered .lesson-title,
 .lesson-card-numbered .lesson-summary,
 .lesson-card-numbered .lesson-links {
