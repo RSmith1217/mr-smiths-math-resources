@@ -1,6 +1,6 @@
 (() => {
   const titlePatterns = [
-    { pattern: /^Lesson\s+(\d+):\s*(.+)$/i, label: "Lesson" },
+    { pattern: /^Lesson\s+(\d+[A-Z]?):\s*(.+)$/i, label: "Lesson" },
     { pattern: /^Lesson\s+([A-Z]):\s*(.+)$/i, label: "Lesson" },
     { pattern: /^Unit\s+\d+,\s*Lesson\s+(\d+):\s*(.+)$/i, label: "Lesson" },
     { pattern: /^Unit\s+\d+,\s*Lesson\s+(\d+)\s+-\s*(.+)$/i, label: "Lesson" },
