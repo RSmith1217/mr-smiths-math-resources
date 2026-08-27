@@ -50,6 +50,10 @@
 
   const applyLessonNumberCards = () => {
     document.querySelectorAll(".lesson-item").forEach((item) => {
+      if (item.closest(".course-essentials-grid")) {
+        return;
+      }
+
       const title = item.querySelector(".lesson-title");
       if (!title || item.querySelector(".lesson-number-panel")) {
         return;
@@ -139,6 +143,48 @@
     });
   };
 
+  const applyMenuDismissal = () => {
+    const menus = Array.from(document.querySelectorAll(".nav-menu"));
+
+    menus.forEach((menu) => {
+      menu.addEventListener("toggle", () => {
+        if (!menu.open) {
+          return;
+        }
+
+        menus.forEach((otherMenu) => {
+          if (otherMenu !== menu) {
+            otherMenu.open = false;
+          }
+        });
+      });
+
+      menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menu.open = false;
+        });
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      menus.forEach((menu) => {
+        if (menu.open && !menu.contains(event.target)) {
+          menu.open = false;
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      menus.forEach((menu) => {
+        menu.open = false;
+      });
+    });
+  };
+
   const applyCountdowns = () => {
     document.querySelectorAll("[data-countdown]").forEach((countdown) => {
       const targetValue = countdown.getAttribute("data-countdown-target");
@@ -178,6 +224,7 @@
     applyLessonNumberCards();
     applyNewTabBehavior();
     applyDesktopHoverMenus();
+    applyMenuDismissal();
     applyCountdowns();
   };
 

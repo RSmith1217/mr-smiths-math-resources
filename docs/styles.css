@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap");
 
 :root {
-  --bg: #f7f6f4;
-  --surface: #ffffff;
-  --surface-soft: #faf9f7;
-  --text-primary: #2e1618;
-  --text-secondary: #62585b;
-  --maroon-900: #2a060d;
-  --maroon-700: #43111b;
-  --maroon-500: #5d2230;
-  --accent: #7a0000;
-  --accent-soft: #f6e7e7;
-  --line: #e3dada;
-  --shadow: 0 12px 28px rgba(52, 42, 43, 0.08);
+  --bg: #f4efe8;
+  --surface: #fffdf9;
+  --surface-soft: #f8f1e8;
+  --text-primary: #2b1518;
+  --text-secondary: #6d5d58;
+  --maroon-900: #351018;
+  --maroon-700: #5a1c2a;
+  --maroon-500: #7b3041;
+  --accent: #a66f27;
+  --accent-soft: #f3e4cc;
+  --line: #dfd0c2;
+  --shadow: 0 18px 44px rgba(67, 38, 31, 0.11);
   --radius-lg: 18px;
   --radius-md: 12px;
   --block-gap: 1rem;
@@ -51,7 +51,9 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, #fffefe 0%, #f7f6f4 46%, #f1eeee 100%);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(184, 135, 68, 0.13), transparent 34%),
+    linear-gradient(180deg, #fffdf8 0%, #f5efe7 58%, #eee5db 100%);
 }
 
 .site-header {
@@ -1299,6 +1301,186 @@ a:focus-visible {
   margin-top: 0.45rem;
 }
 
+/* Heritage Burgundy visual refinement */
+.site-header:not(:has(.home-social-stack)),
+.site-header:not(:has(.home-social-stack)) .header-inner {
+  display: contents;
+}
+
+.site-header:not(:has(.home-social-stack)) .home-title-row {
+  max-width: 960px;
+  margin: 0 auto 0.85rem;
+  padding: 4.5rem 1.2rem 0;
+}
+
+.home-title-row h1 {
+  color: var(--maroon-900);
+  letter-spacing: -0.025em;
+}
+
+.top-links {
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  border-color: var(--maroon-900);
+  background: rgba(53, 16, 24, 0.97);
+  box-shadow: 0 14px 30px rgba(53, 16, 24, 0.18);
+}
+
+.quick-link {
+  border-color: transparent;
+  background: transparent;
+  color: #fffaf2;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.quick-link:hover,
+.quick-link:focus-visible {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  box-shadow: inset 0 -2px 0 #d7ae68;
+}
+
+.quick-link[aria-current="page"] {
+  border-color: #d7ae68;
+  background: #fff9ed;
+  color: var(--maroon-900);
+  box-shadow: 0 4px 12px rgba(24, 5, 10, 0.18);
+}
+
+.nav-menu-panel {
+  border-color: #d4bea9;
+  background: #fffaf2;
+  box-shadow: 0 20px 44px rgba(53, 16, 24, 0.2);
+}
+
+.nav-menu-panel a {
+  border-color: transparent;
+  background: transparent;
+  color: #4b1722;
+}
+
+.nav-menu-panel a:hover,
+.nav-menu-panel a:focus-visible {
+  border-color: #dfc89f;
+  background: #f5e7ce;
+}
+
+.class-card {
+  border-color: #dfd0c2;
+  background: rgba(255, 253, 249, 0.94);
+  box-shadow: 0 20px 46px rgba(67, 38, 31, 0.1);
+}
+
+.unit-heading {
+  color: var(--maroon-700);
+  letter-spacing: 0.075em;
+}
+
+.lesson-card-numbered {
+  border-color: #d9c4b1;
+  background: linear-gradient(180deg, #fffefb, #fdf8f2);
+  box-shadow: 0 14px 30px rgba(67, 38, 31, 0.09);
+}
+
+.lesson-card-numbered::after {
+  border-color: #d8b982;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.75), transparent 38%),
+    linear-gradient(155deg, #f6e9d3, #e1c08d);
+}
+
+.lesson-number-label,
+.lesson-number-value {
+  color: #4b1722;
+}
+
+.lesson-links a {
+  border-color: #cda96c;
+  background: #fff8eb;
+  color: #4b1722;
+}
+
+.lesson-links a:hover,
+.lesson-links a:focus-visible {
+  background: #4b1722;
+  color: #fffaf2;
+}
+
+/* Compact AP Calculus course essentials */
+.course-essentials-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.course-essentials-grid > .resource-block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0.9rem;
+  border: 1px solid #d9c4b1;
+  border-radius: 14px;
+  background: rgba(255, 253, 249, 0.88);
+}
+
+.course-essentials-grid > .resource-block + .resource-block {
+  margin-top: 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid #d9c4b1;
+}
+
+.course-essentials-grid h3 {
+  margin-bottom: 0.65rem;
+  color: var(--maroon-700);
+  font-size: 0.82rem;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.course-essentials-grid .lesson-list {
+  flex: 1;
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 0.62rem;
+}
+
+.course-essentials-grid .course-start-block .lesson-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.course-essentials-grid .lesson-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0.68rem 0.72rem;
+  border-color: #e4d7ca;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+}
+
+.course-essentials-grid .lesson-summary {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.course-essentials-grid .lesson-item .lesson-links {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: auto;
+  padding-top: 0.48rem;
+}
+
+.course-essentials-grid .lesson-links a {
+  min-height: 1.8rem;
+  padding: 0.25rem 0.58rem;
+  font-size: 0.72rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1311,6 +1493,22 @@ a:focus-visible {
 }
 
 @media (max-width: 640px) {
+  .site-header:not(:has(.home-social-stack)) .home-title-row {
+    padding-top: 3rem;
+  }
+
+  .course-essentials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-essentials-grid .course-start-block .lesson-list {
+    grid-template-columns: 1fr;
+  }
+
+  .course-essentials-grid .lesson-list {
+    grid-auto-rows: auto;
+  }
+
   .site-header {
     padding-top: 3.2rem;
   }
