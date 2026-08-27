@@ -901,8 +901,33 @@ h3 {
 
 .home-announcement-grid .announcement-bar {
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
   align-items: start;
   gap: 0.7rem;
+}
+
+.home-resource-category {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.3rem 0 -0.15rem;
+}
+
+.home-resource-category::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #cda96c, rgba(205, 169, 108, 0.12));
+}
+
+.home-resource-category h2 {
+  margin: 0;
+  color: var(--maroon-700);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .home-announcement-grid .announcement-bar .lesson-links {
