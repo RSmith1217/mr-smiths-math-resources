@@ -1046,28 +1046,22 @@ a:focus-visible {
 
 .contest-resource-list {
   display: grid;
-  gap: 0.55rem;
 }
 
 .contest-resource-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 0.95rem;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  color: var(--maroon-700);
-  background: #fff;
-  text-decoration: none;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--line);
 }
 
-.contest-resource-item:hover {
-  border-color: var(--accent);
-  background: var(--surface-soft);
+.contest-resource-item:last-child {
+  border-bottom: 1px solid var(--line);
 }
 
-.contest-resource-item span {
+.contest-resource-copy {
   display: grid;
   gap: 0.18rem;
 }
@@ -1082,8 +1076,26 @@ a:focus-visible {
   font-weight: 500;
 }
 
-.contest-resource-item > b {
-  font-size: 1.05rem;
+.contest-resource-item .lesson-links {
+  display: block;
+  margin: 0;
+}
+
+.contest-resource-item .lesson-links a {
+  min-width: 7.5rem;
+  min-height: 2rem;
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .contest-resource-item {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .contest-resource-item .lesson-links {
+    justify-self: start;
+  }
 }
 
 .puzzle-copy .tag {
