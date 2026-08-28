@@ -1040,6 +1040,52 @@ a:focus-visible {
   align-items: center;
 }
 
+.contest-resource-card > h2 {
+  margin-bottom: 0.8rem;
+}
+
+.contest-resource-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.contest-resource-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--maroon-700);
+  background: #fff;
+  text-decoration: none;
+}
+
+.contest-resource-item:hover {
+  border-color: var(--accent);
+  background: var(--surface-soft);
+}
+
+.contest-resource-item span {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.contest-resource-item strong {
+  font-size: 0.9rem;
+}
+
+.contest-resource-item small {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.contest-resource-item > b {
+  font-size: 1.05rem;
+}
+
 .puzzle-copy .tag {
   display: inline-flex;
   margin-bottom: 0.65rem;
