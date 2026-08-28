@@ -1045,6 +1045,41 @@ a:focus-visible {
   margin-bottom: 0.65rem;
 }
 
+.puzzle-question {
+  margin: 0.55rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.puzzle-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.7rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.puzzle-choices li:last-child {
+  grid-column: 1 / -1;
+}
+
+.puzzle-choices span {
+  display: inline-grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-right: 0.2rem;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--maroon-700);
+  background: var(--accent-soft);
+  font-size: 0.67rem;
+}
+
 .puzzle-media {
   margin: 0;
   border: 1px solid var(--line);
