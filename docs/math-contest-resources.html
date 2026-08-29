@@ -24,6 +24,13 @@
     />
     <link rel="stylesheet" href="styles.css?v=20260827heritage" />
     <script src="site-links.js?v=20260827nav" defer></script>
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"]] },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-70DNTY3DTZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -142,17 +149,16 @@
             </div>
             <h2>Circle and Distance from a Line</h2>
             <p class="contest-problem-question">
-              The circle <span class="math-expression"><i>x</i><sup>2</sup> + (<i>y</i> + 2)<sup>2</sup> = <i>r</i><sup>2</sup></span>,
-              where <span class="math-expression"><i>r</i> &gt; 0</span>, contains exactly two points whose distance from the line
-              <span class="math-expression"><i>y</i> = √3<i>x</i> + 2</span> is 1. In which interval does <i>r</i> lie?
+              The circle \(x^2 + (y + 2)^2 = r^2\), where \(r &gt; 0\), contains exactly two points
+              whose distance from the line \(y = \sqrt{3}x + 2\) is \(1\). In which interval does \(r\) lie?
             </p>
           </div>
           <div class="contest-problem-response">
             <ol class="contest-problem-choices" aria-label="Answer choices">
-              <li><span>A</span> (0, 1)</li>
-              <li><span>B</span> (1, 3)</li>
-              <li><span>C</span> (3, +∞)</li>
-              <li><span>D</span> (0, +∞)</li>
+              <li><span>A</span> \((0,1)\)</li>
+              <li><span>B</span> \((1,3)\)</li>
+              <li><span>C</span> \((3,+\infty)\)</li>
+              <li><span>D</span> \((0,+\infty)\)</li>
             </ol>
             <span class="pending-link contest-solution-pending" aria-label="Solution coming soon">Solution coming soon</span>
           </div>
