@@ -1088,10 +1088,6 @@ a:focus-visible {
 }
 
 .contest-problem-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(210px, .55fr);
-  gap: clamp(1.25rem, 4vw, 3rem);
-  align-items: center;
   border-top: 3px solid var(--accent);
 }
 
@@ -1107,14 +1103,13 @@ a:focus-visible {
 .contest-problem-meta > span { color: var(--text-secondary); font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .contest-problem-copy h2 { margin: 0 0 .65rem; }
 .contest-problem-question { margin: 0; color: var(--text-secondary); font-size: .96rem; line-height: 1.75; }
-.contest-problem-response { display: grid; gap: 1rem; }
+.contest-problem-response { display: grid; gap: .85rem; max-width: 30rem; margin-top: .85rem; }
 .contest-problem-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .55rem .8rem; margin: 0; padding: 0; list-style: none; color: var(--text-primary); font-size: .95rem; font-weight: 700; }
 .contest-problem-choices li { display: flex; align-items: center; gap: .3rem; min-height: 2rem; }
 .contest-problem-choices li span { display: inline-grid; flex: 0 0 auto; place-items: center; width: 1.55rem; height: 1.55rem; border-radius: 50%; background: var(--accent-soft); color: var(--maroon-700); font-size: .72rem; font-weight: 800; }
 .contest-solution-pending { justify-self: start; min-height: 2rem; padding-inline: .85rem; }
 
 @media (max-width: 640px) {
-  .contest-problem-feature { grid-template-columns: 1fr; gap: 1.15rem; }
   .contest-problem-meta { align-items: flex-start; flex-direction: column; gap: .45rem; }
 
   .contest-resource-item {
