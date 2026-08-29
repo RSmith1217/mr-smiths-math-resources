@@ -1614,6 +1614,23 @@ a:focus-visible {
 .desmos-course-galleries { display: grid; gap: 1.25rem; margin-top: 1.25rem; }
 @media (max-width: 640px) { .desmos-empty-state { grid-template-columns: 1fr; } .desmos-mark { width: 56px; height: 56px; } }
 
+.desmos-course-section { margin-bottom: 3rem; }
+.desmos-course-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; padding-bottom: .85rem; border-bottom: 1px solid rgba(74,28,35,.18); }
+.desmos-course-heading h2 { margin: .18rem 0 0; color: var(--maroon); font-size: clamp(1.65rem,3vw,2.35rem); line-height: 1.05; }
+.desmos-course-count { flex: 0 0 auto; padding: .42rem .72rem; border-radius: 999px; background: rgba(200,157,57,.15); color: var(--maroon); font-size: .79rem; font-weight: 800; }
+.desmos-applet-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
+.desmos-applet-card { min-width: 0; overflow: hidden; border: 1px solid rgba(74,28,35,.13); border-radius: 18px; background: rgba(255,253,249,.96); box-shadow: 0 12px 28px rgba(74,28,35,.08); transition: transform 180ms ease,box-shadow 180ms ease; }
+.desmos-applet-card:hover { transform: translateY(-3px); box-shadow: 0 17px 34px rgba(74,28,35,.13); }
+.desmos-applet-image { position: relative; display: block; height: 180px; overflow: hidden; border-bottom: 1px solid rgba(74,28,35,.11); background: #f4f0e9; }
+.desmos-applet-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 240ms ease; }
+.desmos-applet-card:hover .desmos-applet-image img { transform: scale(1.025); }
+.desmos-open-cue { position: absolute; right: .75rem; bottom: .75rem; padding: .44rem .68rem; border-radius: 999px; background: rgba(74,28,35,.92); color: #fff; font-size: .75rem; font-weight: 800; box-shadow: 0 6px 16px rgba(31,19,20,.2); }
+.desmos-applet-copy { padding: 1rem 1rem 1.1rem; }
+.desmos-applet-copy h3 { margin: 0 0 .48rem; color: var(--maroon); font-size: 1.08rem; line-height: 1.2; }
+.desmos-applet-copy p { margin: 0; color: #66585a; font-size: .9rem; line-height: 1.5; }
+@media (max-width: 900px) { .desmos-applet-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 600px) { .desmos-course-heading { align-items: flex-start; } .desmos-applet-grid { grid-template-columns: 1fr; } .desmos-applet-image { height: min(55vw,240px); } }
+
 .explorers-site-header { padding-top: 2.8rem; }
 .explorers-site-header h1 { font-size: clamp(2.8rem, 7vw, 5.7rem); letter-spacing: -.06em; }
 .explorers-content { width: 100%; max-width: 960px; margin: 0 auto; }
