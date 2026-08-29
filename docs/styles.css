@@ -1087,7 +1087,37 @@ a:focus-visible {
   border-radius: 999px;
 }
 
+.contest-problem-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(210px, .55fr);
+  gap: clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+  border-top: 3px solid var(--accent);
+}
+
+.contest-problem-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .65rem;
+}
+
+.contest-problem-meta .tag { margin: 0; }
+.contest-problem-meta > span { color: var(--text-secondary); font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.contest-problem-copy h2 { margin: 0 0 .65rem; }
+.contest-problem-question { margin: 0; color: var(--text-secondary); font-size: .96rem; line-height: 1.75; }
+.math-expression { white-space: nowrap; color: var(--text); font-family: Georgia, "Times New Roman", serif; font-size: 1.06em; }
+.contest-problem-response { display: grid; gap: 1rem; }
+.contest-problem-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .55rem; margin: 0; padding: 0; list-style: none; }
+.contest-problem-choices li { display: flex; align-items: center; gap: .55rem; padding: .65rem .7rem; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.7); font-family: Georgia, "Times New Roman", serif; font-size: .95rem; }
+.contest-problem-choices li span { display: grid; flex: 0 0 auto; place-items: center; width: 1.55rem; height: 1.55rem; border-radius: 50%; background: var(--maroon); color: #fff; font-family: inherit; font-size: .72rem; font-weight: 800; }
+.contest-solution-pending { justify-self: start; min-height: 2rem; padding-inline: .85rem; }
+
 @media (max-width: 640px) {
+  .contest-problem-feature { grid-template-columns: 1fr; gap: 1.15rem; }
+  .contest-problem-meta { align-items: flex-start; flex-direction: column; gap: .45rem; }
+
   .contest-resource-item {
     grid-template-columns: 1fr;
     gap: 0.55rem;
