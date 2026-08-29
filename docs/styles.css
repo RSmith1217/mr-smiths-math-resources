@@ -368,6 +368,31 @@ h1 {
   min-height: 240px;
 }
 
+.explore-tile {
+  display: flex;
+  flex-direction: column;
+}
+
+.explore-tile > h2 {
+  min-height: 2.4em;
+}
+
+.explore-tile > .card-description {
+  min-height: 4.8em;
+  margin-bottom: 1rem;
+}
+
+.explore-tile > .lesson-links {
+  margin-top: 0;
+}
+
+@media (max-width: 620px) {
+  .explore-tile > h2,
+  .explore-tile > .card-description {
+    min-height: 0;
+  }
+}
+
 .class-grid {
   max-width: 960px;
   margin: 0 auto;
