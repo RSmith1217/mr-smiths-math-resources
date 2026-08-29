@@ -1108,9 +1108,9 @@ a:focus-visible {
 .contest-problem-copy h2 { margin: 0 0 .65rem; }
 .contest-problem-question { margin: 0; color: var(--text-secondary); font-size: .96rem; line-height: 1.75; }
 .contest-problem-response { display: grid; gap: 1rem; }
-.contest-problem-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .55rem; margin: 0; padding: 0; list-style: none; }
-.contest-problem-choices li { display: flex; align-items: center; gap: .55rem; padding: .65rem .7rem; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.7); font-family: Georgia, "Times New Roman", serif; font-size: .95rem; }
-.contest-problem-choices li span { display: grid; flex: 0 0 auto; place-items: center; width: 1.55rem; height: 1.55rem; border-radius: 50%; background: var(--maroon); color: #fff; font-family: inherit; font-size: .72rem; font-weight: 800; }
+.contest-problem-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .55rem .8rem; margin: 0; padding: 0; list-style: none; color: var(--text-primary); font-size: .95rem; font-weight: 700; }
+.contest-problem-choices li { display: flex; align-items: center; gap: .3rem; min-height: 2rem; }
+.contest-problem-choices li span { display: inline-grid; flex: 0 0 auto; place-items: center; width: 1.55rem; height: 1.55rem; border-radius: 50%; background: var(--accent-soft); color: var(--maroon-700); font-size: .72rem; font-weight: 800; }
 .contest-solution-pending { justify-self: start; min-height: 2rem; padding-inline: .85rem; }
 
 @media (max-width: 640px) {
