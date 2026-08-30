@@ -1475,9 +1475,14 @@ a:focus-visible {
 }
 
 .site-header:not(:has(.home-social-stack)) .home-title-row {
+  width: calc(100% - 2.4rem);
   max-width: 960px;
   margin: 0 auto 0.85rem;
-  padding: 4.5rem 1.2rem 0;
+  padding: 4.9rem 0 0;
+}
+
+.site-header:not(:has(.home-social-stack)) .top-links {
+  width: calc(100% - 2.4rem);
 }
 
 .home-title-row h1 {
@@ -1727,7 +1732,12 @@ a:focus-visible {
 
 @media (max-width: 640px) {
   .site-header:not(:has(.home-social-stack)) .home-title-row {
-    padding-top: 3rem;
+    min-height: 8.2rem;
+    padding-top: 3.6rem;
+  }
+
+  .site-header:not(:has(.home-social-stack)) .top-links {
+    width: calc(100% - 2.4rem);
   }
 
   .course-essentials-grid {
