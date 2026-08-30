@@ -493,6 +493,31 @@ h2 {
   margin-top: 0.16rem;
 }
 
+.exam-countdown-actions {
+  margin-top: 0.65rem;
+}
+
+.exam-countdown-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.34rem 0.72rem;
+  border: 1px solid var(--maroon-700);
+  border-radius: 8px;
+  background: var(--maroon-700);
+  color: #fffaf2;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.exam-countdown-actions a:hover,
+.exam-countdown-actions a:focus-visible {
+  border-color: var(--maroon-900);
+  background: var(--maroon-900);
+  color: #ffffff;
+}
+
 .exam-countdown-note {
   margin: 0.28rem 0 0;
   color: var(--text-secondary);
