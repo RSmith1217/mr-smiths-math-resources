@@ -1679,7 +1679,6 @@ a:focus-visible {
 }
 
 .desmos-site-header { padding-top: 2.8rem; }
-.desmos-site-header h1 { font-size: clamp(2.8rem, 7vw, 5.7rem); letter-spacing: -.06em; }
 .desmos-content { width: 100%; max-width: 960px; margin: 0 auto; }
 .desmos-empty-state { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.2rem; margin-top: 1rem; padding: 1.5rem; border: 1px dashed #ccbcae; border-radius: var(--radius-lg); background: rgba(255,253,249,.72); }
 .desmos-mark { position: relative; display: grid; width: 68px; height: 68px; place-items: center; overflow: hidden; border-radius: 18px; background: var(--maroon-700); box-shadow: 0 12px 28px rgba(53,16,24,.15); }
@@ -1711,7 +1710,6 @@ a:focus-visible {
 @media (max-width: 600px) { .desmos-course-heading { align-items: flex-start; } .desmos-applet-grid { grid-template-columns: 1fr; } .desmos-applet-image { height: min(55vw,240px); } }
 
 .explorers-site-header { padding-top: 2.8rem; }
-.explorers-site-header h1 { font-size: clamp(2.8rem, 7vw, 5.7rem); letter-spacing: -.06em; }
 .explorers-content { width: 100%; max-width: 960px; margin: 0 auto; }
 .explorers-intro { display: grid; grid-template-columns: minmax(0, .85fr) minmax(280px, .55fr); align-items: end; gap: 3rem; margin: 1rem 0 1.5rem; padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .explorers-kicker { margin: 0 0 .4rem; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
