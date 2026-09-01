@@ -612,6 +612,30 @@ h3 {
   box-shadow: inset 3px 0 0 #95b7c9;
 }
 
+.activity-item {
+  background: linear-gradient(180deg, #fffdf8 0%, #fcf5e9 100%);
+  border-color: #dfc79e;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.resource-type-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  margin-right: 0.4rem;
+  border: 1px solid #d8b77e;
+  border-radius: 999px;
+  padding: 0.08rem 0.42rem;
+  background: var(--accent-soft);
+  color: var(--maroon-700);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  vertical-align: 0.08rem;
+}
+
 .lesson-title {
   margin: 0;
   font-size: 0.92rem;
