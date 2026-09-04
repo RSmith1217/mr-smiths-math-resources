@@ -50,7 +50,7 @@
 
   const applyLessonNumberCards = () => {
     document.querySelectorAll(".lesson-item").forEach((item) => {
-      if (item.closest(".course-essentials-grid")) {
+      if (item.closest(".course-essentials-grid") || item.querySelector(".resource-type-label")) {
         return;
       }
 
