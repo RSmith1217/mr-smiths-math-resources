@@ -1777,6 +1777,24 @@ a.latest-video-card:focus-visible {
   object-fit: cover;
 }
 
+.latest-video-date {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  padding: 0.2rem 0.42rem;
+  background: rgba(53, 16, 24, 0.86);
+  color: #fff;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  line-height: 1;
+  text-transform: uppercase;
+  backdrop-filter: blur(5px);
+}
+
 .latest-video-play {
   position: absolute;
   top: 50%;
