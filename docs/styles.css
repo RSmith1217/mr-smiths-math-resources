@@ -1017,8 +1017,15 @@ h3 {
   font-size: 0.98rem;
 }
 
-.next-assessment-item p {
+.next-assessment-item .assessment-schedule {
   margin-top: 0.72rem;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.next-assessment-item .assessment-description {
+  margin-top: 0.18rem;
   color: var(--text-secondary);
   font-size: 0.84rem;
   line-height: 1.5;
