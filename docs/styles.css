@@ -974,6 +974,56 @@ h3 {
   padding: 1rem;
 }
 
+.next-assessments-panel {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
+  box-shadow: var(--shadow);
+}
+
+.next-assessments-panel > h2 {
+  margin: 0;
+  padding: 0.72rem 1rem;
+  background: var(--maroon-900);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.next-assessments-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.next-assessment-item {
+  padding: 0.9rem 1rem 1rem;
+}
+
+.next-assessment-item + .next-assessment-item {
+  border-left: 1px solid var(--line);
+}
+
+.next-assessment-item h3,
+.next-assessment-item p {
+  margin: 0;
+}
+
+.next-assessment-item h3 {
+  color: var(--maroon-900);
+  font-size: 0.98rem;
+}
+
+.next-assessment-item p {
+  margin-top: 0.42rem;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
 .home-announcement-grid .announcement-bar {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
@@ -2006,6 +2056,15 @@ a.latest-video-card:focus-visible {
 
   .home-announcement-grid {
     grid-template-columns: 1fr;
+  }
+
+  .next-assessments-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .next-assessment-item + .next-assessment-item {
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
 
   .exam-countdown {
