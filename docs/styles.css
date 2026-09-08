@@ -283,8 +283,21 @@ h1 {
   cursor: default;
 }
 
+.site-header:has(.home-landing-header),
+.site-header:has(.home-landing-header) .home-landing-header {
+  display: contents;
+}
+
+.home-landing-header .home-title-row {
+  position: relative;
+  width: calc(100% - 2.4rem);
+  max-width: 960px;
+  margin: 0 auto 0.6rem;
+  padding-top: 4.9rem;
+}
+
 .home-landing-header .home-social-stack {
-  top: 8px !important;
+  top: calc(4.9rem + 8px) !important;
 }
 
 .quick-link {
@@ -2044,7 +2057,11 @@ a.latest-video-card:focus-visible {
   }
 
   .home-landing-header .home-social-stack {
-    top: 14px !important;
+    top: calc(3.6rem + 14px) !important;
+  }
+
+  .home-landing-header .home-title-row {
+    padding-top: 3.6rem;
   }
 
   .top-links {
