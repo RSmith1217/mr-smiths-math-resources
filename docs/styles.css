@@ -1869,6 +1869,23 @@ a.latest-video-card:focus-visible {
   transform: translate(-50%, -50%);
 }
 
+.latest-video-placeholder .latest-video-thumbnail {
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.48), transparent 34%),
+    linear-gradient(135deg, #ead9bd 0%, #d7b77c 100%);
+}
+
+.latest-video-placeholder-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: var(--maroon-900);
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  transform: translate(-50%, -50%);
+}
+
 .latest-video-copy {
   display: grid;
   gap: 0.12rem;
