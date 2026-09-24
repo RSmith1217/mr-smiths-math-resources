@@ -480,6 +480,32 @@ h2 {
   padding: 0.85rem;
 }
 
+.course-announcement {
+  margin-bottom: var(--block-gap);
+  border: 1px solid #d8c8cb;
+  border-left: 6px solid var(--maroon-700);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, #fffdfd 0%, #fbf7f7 100%);
+  padding: 0.85rem 1rem;
+}
+
+.course-announcement h2 {
+  margin: 0;
+  color: var(--maroon-900);
+  font-size: 1rem;
+}
+
+.course-announcement p {
+  margin: 0.4rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.course-announcement strong {
+  color: var(--maroon-900);
+}
+
 .exam-countdown {
   margin-bottom: var(--block-gap);
   display: grid;
