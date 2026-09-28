@@ -1146,7 +1146,6 @@ a:focus-visible {
   text-align: center;
 }
 
-.lesson-links a[href*="desmos.com"],
 .lesson-links a[href*="wayground.com"] {
   background: var(--surface-soft);
   color: var(--text-secondary);
