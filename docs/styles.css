@@ -1039,6 +1039,9 @@ h3 {
 }
 
 .next-assessment-item {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
   padding: 0.9rem 1rem 1rem;
 }
 
@@ -2126,6 +2129,11 @@ a.latest-video-card:focus-visible {
 
   .next-assessments-grid {
     grid-template-columns: 1fr;
+  }
+
+  .next-assessment-item {
+    display: block;
+    grid-row: auto;
   }
 
   .next-assessment-item + .next-assessment-item {
