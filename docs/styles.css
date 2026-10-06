@@ -1043,7 +1043,9 @@ h3 {
 
 .next-assessment-item .assessment-schedules {
   display: grid;
+  align-content: start;
   gap: 0.08rem;
+  min-height: 2.6rem;
   margin-top: 0.72rem;
 }
 
@@ -2139,6 +2141,10 @@ a.latest-video-card:focus-visible {
   .next-assessment-item {
     display: block;
     grid-row: auto;
+  }
+
+  .next-assessment-item .assessment-schedules {
+    min-height: 0;
   }
 
   .next-assessment-item + .next-assessment-item {
