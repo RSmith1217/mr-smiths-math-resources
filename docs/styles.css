@@ -1058,6 +1058,17 @@ h3 {
   line-height: 1.5;
 }
 
+.next-assessment-item .assessment-type {
+  font-weight: 700;
+}
+
+.next-assessment-item .assessment-topic {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.35rem;
+  margin-top: 0.12rem;
+}
+
 .next-assessment-item .assessment-schedule + .assessment-schedule {
   margin-top: 0.18rem;
 }
