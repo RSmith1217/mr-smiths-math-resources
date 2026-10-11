@@ -2240,3 +2240,46 @@ a.latest-video-card:focus-visible {
   }
 
 }
+
+/* Homepage identity: keep the badge separate from the social destinations. */
+.home-landing-header .home-title-row {
+  align-items: center;
+  gap: 1rem;
+}
+.home-brand-link {
+  display: block;
+  flex: 0 0 88px;
+  border-radius: 50%;
+  line-height: 0;
+}
+.home-brand-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.home-brand-link:focus-visible {
+  outline: 3px solid var(--maroon-700);
+  outline-offset: 4px;
+}
+.home-landing-header .home-social-stack {
+  position: static;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .home-landing-header .home-title-row {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .home-brand-link { flex-basis: 72px; }
+  .home-landing-header .home-title-row h1 {
+    flex: 1;
+    min-width: 0;
+    font-size: 1.6rem;
+  }
+  .home-landing-header .home-social-stack {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
