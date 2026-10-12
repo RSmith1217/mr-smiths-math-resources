@@ -2312,8 +2312,7 @@ html { scrollbar-gutter: stable; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.85rem;
-  max-width: 760px;
-  margin: 0 auto 0.9rem;
+  margin: 0 0 0.9rem;
 }
 .home-latest-grid .latest-video-copy { padding: 0.65rem; }
 .home-latest-grid .latest-video-copy > span { font-size: 0.62rem; }
