@@ -2302,3 +2302,30 @@ html { scrollbar-gutter: stable; }
 .ai-brochure-grid > .class-card { min-width: 0; }
 
 .page-introduction { max-width: 960px; margin: 0 auto 1rem; }
+
+/* A compact preview of teaching videos, below classroom information. */
+.home-latest-videos,
+.home-problem-resource { grid-column: 1 / -1; }
+.home-latest-intro h2 { margin: 0; font-size: 1.1rem; }
+.home-latest-intro .card-description { margin: 0.35rem 0 1rem; }
+.home-latest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  max-width: 760px;
+  margin: 0 auto 0.9rem;
+}
+.home-latest-grid .latest-video-copy { padding: 0.65rem; }
+.home-latest-grid .latest-video-copy > span { font-size: 0.62rem; }
+.home-latest-grid .latest-video-play { width: 1.8rem; height: 1.8rem; font-size: 0.8rem; }
+.home-latest-videos .lesson-links a { font-size: 0.78rem; }
+@media (max-width: 640px) {
+  .home-latest-grid { grid-template-columns: 1fr; gap: 0.65rem; }
+  .home-latest-grid .latest-video-card {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: center;
+  }
+  .home-latest-grid .latest-video-copy { padding: 0.55rem; }
+  .home-latest-grid .latest-video-copy strong { font-size: 0.72rem; }
+}
