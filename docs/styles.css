@@ -2283,3 +2283,44 @@ a.latest-video-card:focus-visible {
     justify-content: flex-end;
   }
 }
+
+/* Interior pages share the homepage identity at a smaller scale. */
+.site-header.interior-header,
+.site-header.interior-header .header-inner {
+  display: contents;
+}
+.interior-header .home-title-row {
+  width: calc(100% - 2.4rem);
+  max-width: 960px;
+  margin: 0 auto 0.85rem;
+  padding-top: 4.9rem;
+  align-items: center;
+  gap: 1rem;
+}
+.interior-header .home-brand-link { flex-basis: 64px; }
+.interior-header .home-title-row h1 { min-width: 0; }
+.interior-header .home-social-stack {
+  position: static;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.interior-header .top-links { width: calc(100% - 2.4rem); }
+@media (max-width: 640px) {
+  .interior-header .home-title-row {
+    padding-top: 3.6rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .interior-header .home-brand-link { flex-basis: 56px; }
+  .interior-header .home-title-row h1 {
+    flex: 1;
+    font-size: 1.6rem;
+  }
+  .interior-header .home-social-stack {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Keep the AI tables scrollable inside their cards on narrow screens. */
+.ai-brochure-grid > .class-card { min-width: 0; }
