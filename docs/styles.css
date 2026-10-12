@@ -2241,17 +2241,30 @@ a.latest-video-card:focus-visible {
 
 }
 
-/* Homepage identity: keep the badge separate from the social destinations. */
-.home-landing-header .home-title-row {
+/* Shared header geometry prevents jumps between Home and interior pages. */
+html { scrollbar-gutter: stable; }
+.site-header:has(.home-brand-link),
+.site-header:has(.home-brand-link) .header-inner { display: contents; }
+.site-header .home-title-row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  grid-template-rows: minmax(88px, auto);
   align-items: center;
   gap: 1rem;
+  width: calc(100% - 2.4rem);
+  max-width: 960px;
+  margin: 0 auto 0.85rem;
+  padding: 4.9rem 0 0;
 }
 .home-brand-link {
   display: block;
-  flex: 0 0 88px;
+  width: 88px;
+  border: 0;
+  justify-self: center;
   border-radius: 50%;
   line-height: 0;
 }
+.interior-header .home-brand-link { width: 64px; }
 .home-brand-link img {
   display: block;
   width: 100%;
@@ -2262,65 +2275,30 @@ a.latest-video-card:focus-visible {
   outline: 3px solid var(--maroon-700);
   outline-offset: 4px;
 }
-.home-landing-header .home-social-stack {
+.site-header .home-title-row h1 { min-width: 0; }
+.site-header .home-title-row .home-social-stack {
   position: static;
-  margin-left: auto;
-  flex-shrink: 0;
+  margin: 0;
+  justify-self: end;
 }
-@media (max-width: 600px) {
-  .home-landing-header .home-title-row {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .home-brand-link { flex-basis: 72px; }
-  .home-landing-header .home-title-row h1 {
-    flex: 1;
-    min-width: 0;
-    font-size: 1.6rem;
-  }
-  .home-landing-header .home-social-stack {
-    width: 100%;
-    justify-content: flex-end;
-  }
-}
-
-/* Interior pages share the homepage identity at a smaller scale. */
-.site-header.interior-header,
-.site-header.interior-header .header-inner {
-  display: contents;
-}
-.interior-header .home-title-row {
-  width: calc(100% - 2.4rem);
-  max-width: 960px;
-  margin: 0 auto 0.85rem;
-  padding-top: 4.9rem;
-  align-items: center;
-  gap: 1rem;
-}
-.interior-header .home-brand-link { flex-basis: 64px; }
-.interior-header .home-title-row h1 { min-width: 0; }
-.interior-header .home-social-stack {
-  position: static;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-.interior-header .top-links { width: calc(100% - 2.4rem); }
+.site-header .top-links { width: calc(100% - 2.4rem); }
 @media (max-width: 640px) {
-  .interior-header .home-title-row {
-    padding-top: 3.6rem;
-    flex-wrap: wrap;
+  .site-header .home-title-row {
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-rows: minmax(96px, auto) 48px;
     gap: 0.75rem;
+    padding-top: 3.6rem;
   }
-  .interior-header .home-brand-link { flex-basis: 56px; }
-  .interior-header .home-title-row h1 {
-    flex: 1;
-    font-size: 1.6rem;
-  }
-  .interior-header .home-social-stack {
-    width: 100%;
+  .home-brand-link { width: 72px; }
+  .interior-header .home-brand-link { width: 56px; }
+  .site-header .home-title-row h1 { font-size: 1.6rem; }
+  .site-header .home-title-row .home-social-stack {
+    grid-column: 1 / -1;
     justify-content: flex-end;
   }
 }
 
 /* Keep the AI tables scrollable inside their cards on narrow screens. */
 .ai-brochure-grid > .class-card { min-width: 0; }
+
+.page-introduction { max-width: 960px; margin: 0 auto 1rem; }
