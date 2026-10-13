@@ -2328,3 +2328,12 @@ html { scrollbar-gutter: stable; }
   .home-latest-grid .latest-video-copy { padding: 0.55rem; }
   .home-latest-grid .latest-video-copy strong { font-size: 0.72rem; }
 }
+
+/* A small destination cue for the homepage tutorial library. */
+.home-latest-videos .lesson-links .tutorial-library-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.tutorial-library-icon { width: 16px; height: auto; flex: 0 0 16px; }
