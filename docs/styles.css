@@ -2550,3 +2550,23 @@ html { scrollbar-gutter: stable; }
 .document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > .lesson-resource-separator {
   visibility: hidden;
 }
+
+/* A shared right gutter aligns numbered lessons and activity resources. */
+.lesson-item:not(.lesson-card-numbered):has(.lesson-links-documents) {
+  padding-right: 1rem;
+}
+
+.lesson-card-numbered > .lesson-links-documents {
+  padding-right: 1rem;
+}
+
+/* Missing versions do not reserve invisible space at the row's right edge. */
+.document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > :is(.lesson-resource-separator, span[aria-hidden="true"]:empty) {
+  display: none;
+}
