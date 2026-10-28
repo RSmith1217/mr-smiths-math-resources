@@ -2341,3 +2341,50 @@ html { scrollbar-gutter: stable; }
 .tutorial-library-icon { width: 16px; height: auto; flex: 0 0 16px; }
 
 .nav-menu-panel .nav-course-unavailable { opacity: 0.5; cursor: default; }
+
+/* Trial: APC Unit 2, Lesson 3 resources grouped by day. */
+.lesson-item .lesson-links.lesson-links-rows {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.lesson-resource-row {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.35rem 0.8rem;
+  max-width: 32rem;
+}
+
+.lesson-resource-label {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.lesson-item .lesson-links-rows .lesson-resource-row a {
+  display: inline;
+  min-height: 0;
+  padding: 0.35rem 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.lesson-item .lesson-links-rows .lesson-resource-row a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+  .lesson-resource-row {
+    grid-template-columns: 2.7rem minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 0.5rem;
+  }
+}
