@@ -2476,22 +2476,18 @@ html { scrollbar-gutter: stable; }
 
 /* APC 2-3 trial: document labels with consistent Blank / Complete links. */
 .lesson-item .lesson-links.lesson-links-document-trial {
-  grid-template-columns: max-content max-content max-content max-content;
+  grid-template-columns: max-content max-content max-content max-content max-content;
   justify-self: end;
   width: fit-content;
   column-gap: 0.5rem;
 }
 
-.document-day-heading {
-  grid-column: 1 / -1;
-  margin: 0;
+.document-day-label {
   color: var(--text-secondary);
   font-size: 0.72rem;
   font-weight: 700;
-  line-height: 1.5;
+  padding-right: 0.35rem;
 }
-
-.document-day-heading:not(:first-child) { margin-top: 0.35rem; }
 
 .document-type-label {
   text-align: right;
