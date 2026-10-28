@@ -2560,14 +2560,14 @@ html { scrollbar-gutter: stable; }
   padding-right: 1rem;
 }
 
-/* Missing versions do not reserve invisible space at the row's right edge. */
-.document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) {
+/* Only a single document row collapses missing versions; multiple rows share columns. */
+.document-resource-pairs:not(:has(> .lesson-resource-row:nth-child(2))) .lesson-resource-row:has(> span[aria-hidden="true"]:empty) {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
 }
 
-.document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > :is(.lesson-resource-separator, span[aria-hidden="true"]:empty) {
+.document-resource-pairs:not(:has(> .lesson-resource-row:nth-child(2))) .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > :is(.lesson-resource-separator, span[aria-hidden="true"]:empty) {
   display: none;
 }
 
