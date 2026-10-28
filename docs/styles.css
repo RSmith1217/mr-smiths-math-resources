@@ -2426,3 +2426,33 @@ html { scrollbar-gutter: stable; }
 .lesson-item .lesson-links-rows .lesson-resource-row a:last-child:nth-child(odd) {
   grid-column: auto;
 }
+
+/* Lone resources have their own row and never size paired link columns. */
+.lesson-item .lesson-links.lesson-links-rows {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+}
+
+.lesson-resource-pairs {
+  display: grid;
+  grid-template-columns: max-content max-content minmax(0, max-content) max-content minmax(0, max-content);
+  justify-self: end;
+  max-width: 100%;
+  column-gap: 0.4rem;
+}
+
+.lesson-links-unlabeled .lesson-resource-pairs {
+  grid-template-columns: minmax(0, max-content) max-content minmax(0, max-content);
+}
+
+.lesson-resource-row.lesson-resource-single {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 0.4rem;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .lesson-resource-pairs { column-gap: 0.3rem; }
+}
