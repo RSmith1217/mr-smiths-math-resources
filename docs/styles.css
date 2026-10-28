@@ -2346,7 +2346,7 @@ html { scrollbar-gutter: stable; }
 .lesson-item .lesson-links.lesson-links-rows {
   display: grid;
   grid-template-columns: max-content max-content minmax(0, max-content) max-content minmax(0, max-content);
-  justify-self: end;
+  justify-self: start;
   width: fit-content;
   max-width: 100%;
   gap: 0 0.4rem;
@@ -2436,7 +2436,7 @@ html { scrollbar-gutter: stable; }
 .lesson-resource-pairs {
   display: grid;
   grid-template-columns: max-content max-content minmax(0, max-content) max-content minmax(0, max-content);
-  justify-self: end;
+  justify-self: start;
   max-width: 100%;
   column-gap: 0.4rem;
 }
@@ -2448,7 +2448,7 @@ html { scrollbar-gutter: stable; }
 .lesson-resource-row.lesson-resource-single {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0 0.4rem;
   min-width: 0;
 }
@@ -2457,11 +2457,7 @@ html { scrollbar-gutter: stable; }
   .lesson-resource-pairs { column-gap: 0.3rem; }
 }
 
-/* Keep paired resources tight against their shared vertical separator. */
+/* Left-align all resource links within their compact columns. */
 .lesson-item .lesson-links-rows .lesson-resource-pairs .lesson-resource-row > :is(a, .pending-link) {
   text-align: left;
-}
-
-.lesson-item .lesson-links-rows .lesson-resource-pairs .lesson-resource-row > :is(a, .pending-link):not(:is(a, .pending-link) ~ :is(a, .pending-link)) {
-  text-align: right;
 }
