@@ -2474,8 +2474,8 @@ html { scrollbar-gutter: stable; }
   margin-top: 0.2rem;
 }
 
-/* APC 2-3 trial: document labels with consistent Blank / Complete links. */
-.lesson-item .lesson-links.lesson-links-document-trial {
+/* Standard document labels with consistent Blank / Complete links. */
+.lesson-item .lesson-links.lesson-links-documents {
   grid-template-columns: max-content max-content max-content max-content max-content;
   justify-self: end;
   width: fit-content;
@@ -2496,7 +2496,57 @@ html { scrollbar-gutter: stable; }
   padding-right: 0.25rem;
 }
 
-.lesson-links-document-trial .lesson-resource-row.lesson-resource-single {
+.lesson-links-documents .lesson-resource-row.lesson-resource-single {
   margin-top: 0.35rem;
   justify-content: flex-end;
+}
+
+.lesson-item .lesson-links.lesson-links-documents.documents-without-days {
+  grid-template-columns: max-content max-content max-content max-content;
+}
+
+.lesson-links-documents .lesson-resource-single > a { max-width: 100%; }
+
+@media (max-width: 640px) {
+  .lesson-item .lesson-links.lesson-links-documents {
+    grid-template-columns: max-content minmax(0, max-content) max-content max-content minmax(0, max-content);
+    max-width: 100%;
+    column-gap: 0.3rem;
+  }
+  .lesson-item .lesson-links.lesson-links-documents.documents-without-days {
+    grid-template-columns: minmax(0, max-content) max-content max-content minmax(0, max-content);
+  }
+}
+
+/* Standalone links never contribute to document column widths. */
+.lesson-item .lesson-links.lesson-links-documents,
+.lesson-item .lesson-links.lesson-links-documents.documents-without-days {
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.document-resource-pairs {
+  display: grid;
+  grid-template-columns: max-content max-content max-content max-content max-content;
+  justify-self: end;
+  max-width: 100%;
+  column-gap: 0.5rem;
+}
+
+.documents-without-days .document-resource-pairs {
+  grid-template-columns: max-content max-content max-content max-content;
+}
+
+@media (max-width: 640px) {
+  .document-resource-pairs {
+    grid-template-columns: max-content minmax(0, max-content) max-content max-content minmax(0, max-content);
+    column-gap: 0.3rem;
+  }
+  .documents-without-days .document-resource-pairs {
+    grid-template-columns: minmax(0, max-content) max-content max-content minmax(0, max-content);
+  }
+}
+
+.document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > .lesson-resource-separator {
+  visibility: hidden;
 }
