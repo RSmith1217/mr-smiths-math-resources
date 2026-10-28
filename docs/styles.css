@@ -2345,6 +2345,7 @@ html { scrollbar-gutter: stable; }
 /* Trial: APC Unit 2, Lesson 3 resources grouped by day. */
 .lesson-item .lesson-links.lesson-links-rows {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.15rem;
 }
 
