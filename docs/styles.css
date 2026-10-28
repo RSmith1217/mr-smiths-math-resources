@@ -2342,10 +2342,10 @@ html { scrollbar-gutter: stable; }
 
 .nav-menu-panel .nav-course-unavailable { opacity: 0.5; cursor: default; }
 
-/* Trial: APC Unit 2, Lesson 3 resources grouped by day. */
+/* Standard course resource rows: compact, aligned text links. */
 .lesson-item .lesson-links.lesson-links-rows {
   display: grid;
-  grid-template-columns: max-content max-content max-content max-content max-content;
+  grid-template-columns: max-content max-content minmax(0, max-content) max-content minmax(0, max-content);
   justify-self: end;
   width: fit-content;
   max-width: 100%;
@@ -2399,4 +2399,30 @@ html { scrollbar-gutter: stable; }
     width: 100%;
     column-gap: 0.3rem;
   }
+}
+
+.lesson-item .lesson-links.lesson-links-unlabeled {
+  grid-template-columns: minmax(0, max-content) max-content minmax(0, max-content);
+}
+
+.lesson-item .lesson-links-rows .lesson-resource-row .pending-link {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .lesson-item .lesson-links.lesson-links-unlabeled {
+    grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
+  }
+}
+
+.lesson-item .lesson-links-rows .lesson-resource-row a:last-child:nth-child(odd) {
+  grid-column: auto;
 }
