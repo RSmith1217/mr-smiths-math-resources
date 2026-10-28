@@ -2496,4 +2496,7 @@ html { scrollbar-gutter: stable; }
   padding-right: 0.25rem;
 }
 
-.lesson-links-document-trial .lesson-resource-single { margin-top: 0.35rem; }
+.lesson-links-document-trial .lesson-resource-row.lesson-resource-single {
+  margin-top: 0.35rem;
+  justify-content: flex-end;
+}
