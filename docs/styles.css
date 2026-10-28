@@ -2461,3 +2461,15 @@ html { scrollbar-gutter: stable; }
 .lesson-item .lesson-links-rows .lesson-resource-pairs .lesson-resource-row > :is(a, .pending-link) {
   text-align: left;
 }
+
+/* Unnumbered resource blocks place descriptions above their links. */
+.lesson-item:not(.lesson-card-numbered):has(.lesson-links-rows) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lesson-item:not(.lesson-card-numbered) > .lesson-links-rows {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: start;
+  margin-top: 0.2rem;
+}
