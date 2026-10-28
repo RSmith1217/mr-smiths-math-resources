@@ -2351,6 +2351,7 @@ html { scrollbar-gutter: stable; }
 
 .lesson-resource-row {
   display: block;
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
@@ -2385,4 +2386,3 @@ html { scrollbar-gutter: stable; }
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-
