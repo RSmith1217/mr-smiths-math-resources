@@ -2346,15 +2346,18 @@ html { scrollbar-gutter: stable; }
 .lesson-item .lesson-links.lesson-links-rows {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 0.15rem;
+  gap: 0;
 }
 
 .lesson-resource-row {
-  display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1fr);
-  align-items: baseline;
-  gap: 0.35rem 0.8rem;
-  max-width: 32rem;
+  display: block;
+  line-height: 1.5;
+}
+
+.lesson-resource-separator {
+  margin: 0 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
 }
 
 .lesson-resource-label {
@@ -2366,7 +2369,7 @@ html { scrollbar-gutter: stable; }
 .lesson-item .lesson-links-rows .lesson-resource-row a {
   display: inline;
   min-height: 0;
-  padding: 0.35rem 0;
+  padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -2383,9 +2386,3 @@ html { scrollbar-gutter: stable; }
   outline-offset: 3px;
 }
 
-@media (max-width: 420px) {
-  .lesson-resource-row {
-    grid-template-columns: 2.7rem minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 0.5rem;
-  }
-}
