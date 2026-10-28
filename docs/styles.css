@@ -2570,3 +2570,10 @@ html { scrollbar-gutter: stable; }
 .document-resource-pairs .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > :is(.lesson-resource-separator, span[aria-hidden="true"]:empty) {
   display: none;
 }
+
+/* Keep links on a common baseline in course essentials card rows. */
+.course-essentials-grid .lesson-item:not(.lesson-card-numbered) > .lesson-links-documents {
+  margin-top: auto;
+  padding-top: 0.48rem;
+  flex-shrink: 0;
+}
