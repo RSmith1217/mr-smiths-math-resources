@@ -2345,18 +2345,24 @@ html { scrollbar-gutter: stable; }
 /* Trial: APC Unit 2, Lesson 3 resources grouped by day. */
 .lesson-item .lesson-links.lesson-links-rows {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0;
+  grid-template-columns: max-content max-content max-content max-content max-content;
+  justify-self: end;
+  width: fit-content;
+  max-width: 100%;
+  gap: 0 0.4rem;
 }
 
 .lesson-resource-row {
-  display: block;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
   font-size: 0.78rem;
   line-height: 1.5;
 }
 
 .lesson-resource-separator {
-  margin: 0 0.5rem;
+  margin: 0;
   color: var(--text-secondary);
   font-size: 0.78rem;
 }
@@ -2385,4 +2391,12 @@ html { scrollbar-gutter: stable; }
 .lesson-item .lesson-links-rows .lesson-resource-row a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .lesson-item .lesson-links.lesson-links-rows {
+    grid-template-columns: max-content max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+    width: 100%;
+    column-gap: 0.3rem;
+  }
 }
