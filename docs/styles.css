@@ -2560,20 +2560,21 @@ html { scrollbar-gutter: stable; }
   padding-right: 1rem;
 }
 
-/* Only a single document row collapses missing versions; multiple rows share columns. */
-.document-resource-pairs:not(:has(> .lesson-resource-row:nth-child(2))) .lesson-resource-row:has(> span[aria-hidden="true"]:empty) {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
-.document-resource-pairs:not(:has(> .lesson-resource-row:nth-child(2))) .lesson-resource-row:has(> span[aria-hidden="true"]:empty) > :is(.lesson-resource-separator, span[aria-hidden="true"]:empty) {
-  display: none;
-}
-
 /* Keep links on a common baseline in course essentials card rows. */
 .course-essentials-grid .lesson-item:not(.lesson-card-numbered) > .lesson-links-documents {
   margin-top: auto;
   padding-top: 0.48rem;
   flex-shrink: 0;
+}
+
+/* Shared version-column widths keep descriptors aligned across lessons. */
+.document-resource-pairs {
+  --document-blank-width: 3rem;
+  --document-complete-width: 4.3rem;
+  --document-separator-width: 0.3rem;
+  grid-template-columns: max-content minmax(0, max-content) var(--document-blank-width) var(--document-separator-width) var(--document-complete-width);
+}
+
+.documents-without-days .document-resource-pairs {
+  grid-template-columns: minmax(0, max-content) var(--document-blank-width) var(--document-separator-width) var(--document-complete-width);
 }
