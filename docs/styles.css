@@ -2578,3 +2578,7 @@ html { scrollbar-gutter: stable; }
 .documents-without-days .document-resource-pairs {
   grid-template-columns: minmax(0, max-content) var(--document-blank-width) var(--document-separator-width) var(--document-complete-width);
 }
+
+.next-assessment-item .assessment-details {
+  margin-left: 2.35rem;
+}
