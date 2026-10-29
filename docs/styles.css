@@ -2580,5 +2580,6 @@ html { scrollbar-gutter: stable; }
 }
 
 .next-assessment-item .assessment-details {
+  margin-top: 1.2em;
   margin-left: 2.35rem;
 }
