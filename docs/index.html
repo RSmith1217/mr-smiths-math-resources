@@ -62,6 +62,17 @@
         ]
       }
     </script>
+    <style>
+      .home-new-additions { grid-column: 1 / -1; border-left: 6px solid var(--maroon-700); background: linear-gradient(120deg, #fffdf9, #f6eddd); }
+      .home-new-additions > h2 { margin: 0 0 1rem; color: var(--maroon-700); font-size: 1.1rem; }
+      .home-new-addition-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, 19rem); gap: 1.5rem; align-items: center; }
+      .home-new-addition-body h3 { margin: 0; font-size: 1.2rem; }
+      .home-new-addition-body .card-description { margin: .5rem 0 0; line-height: 1.6; }
+      .home-new-addition-body .lesson-links { display: grid; grid-template-columns: 1fr; width: 100%; }
+      .home-new-addition-body .lesson-links a { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+      .home-new-addition-body .lesson-links a:first-child { color: #fff; background: var(--maroon-700); }
+      @media (max-width: 640px) { .home-new-addition-body { grid-template-columns: 1fr; gap: 1rem; } }
+    </style>
   </head>
   <body id="top">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -243,6 +254,20 @@
         <header class="home-resource-category">
           <h2>Math Learning Resources</h2>
         </header>
+
+        <section class="class-card home-new-additions" aria-labelledby="new-additions-title">
+          <h2 id="new-additions-title">New Additions to the Site</h2>
+          <div class="home-new-addition-body">
+            <div>
+              <h3>Exact Trig Practice Board</h3>
+              <p class="card-description">Sharpen your trig skills with randomized questions, instant answer checks, hints, and worked solutions. Try a 10-question round, revisit missed skills, and explore reference triangles, the unit circle, and inverse-trig ranges.</p>
+            </div>
+            <div class="lesson-links">
+              <a href="https://rsmith1217.github.io/trig-practice-board/?mode=student" target="_blank" rel="noopener noreferrer">Start Student Practice ↗</a>
+              <a href="https://rsmith1217.github.io/trig-practice-board/" target="_blank" rel="noopener noreferrer">Open Projector Mode ↗</a>
+            </div>
+          </div>
+        </section>
 
         <section class="class-card home-latest-videos" aria-labelledby="video-tutorials-title">
           <div class="home-latest-intro">
