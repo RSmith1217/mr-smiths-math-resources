@@ -988,6 +988,12 @@ h3 {
   padding: 1rem;
 }
 
+.home-quote {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+}
+
 .next-assessments-panel {
   grid-column: 1 / -1;
   min-width: 0;
